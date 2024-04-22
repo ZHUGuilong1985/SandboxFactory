@@ -46,3 +46,8 @@ class Sandbox():
         # 新建
 
         pass
+
+    def new_element(self, element):
+        # 新建
+        
+        pass
