@@ -9,6 +9,17 @@ __author__ = 'ZHU Guilong'
 from abc import ABCMeta, abstractmethod
 
 from constant import TIME_UNIT
+from enum import Enum
+
+
+class MaterialUnit(Enum):
+    PCS = 0
+
+
+class MaterialType(Enum):
+    WORKER = 0
+    MACHINE = 1
+    MATERIAL = 2
 
 
 class Route(metaclass=ABCMeta):
@@ -34,11 +45,10 @@ class Resource:
 
     def __init__(self):
 
-        self.name = " "
-        self.id = " "
+        self.name = ''
+        self.id = None  # 用hash码解决id唯一的问题
 
         self.resource_list.append(self)  # 加入到列表
-
         self.is_working = True
 
     def update(self):
@@ -52,34 +62,34 @@ class Material(Resource):
     ''' 
     材料的基础类型
     可以是：材料、产品、水、电、气等；
-    数量，是在实力里面定义的：
-    结算可以相当于rmb一样，两个50pcs的材料，合并后，删除一个实例；
     '''
 
-    def __init__(self, name, amount=0):
+    def __init__(self,
+                 name,
+                 unit=MaterialUnit.PCS,
+                 price=0):
+
+        # base info
+        self.typeid = MaterialType.MATERIAL    
+        self.id = ''    # auto created
         self.name = name
-        self.amount = amount    # 数量
+        self.unit = unit   # 单位
+        self.price = price   # 单价
 
-        # 暂不处理
-        self.unit = "pcs"     # 单位
-        self.price = 0        # 单价
-
-        self.is_work = None        #
+        self.is_work = None     #
+         
 
 
 class Worker(Resource):
-    ''' 
-    操作者
-    '''
+    # 操作者
 
     def __init__(self, name):
-        self.__name = name
-        self.id = " "
+
+        self.__name = name  # worker type
+        self.id = ''
 
         self.consume = ""   # 消耗，佣金
-
         self.costs = ""     # 保留工资
-
         self.sub_resource = []  #
         self.vssel = None       #
 
@@ -136,21 +146,23 @@ class MaterialOperator:
     pass
 
 
-class MaterialFactory:
+class ResourceFactory:
 
     def __init__(self):
         pass
 
-    def new_material(strMaterial):  # 通过输入，来生产不同材料的实例；
+    def new_resource(resource_dict):  # 通过输入，来生产不同材料的实例；
 
-        if strMaterial.typeid == 1:   # 材料
-            newMaterial = Material(strMaterial.name)
-        elif strMaterial.typeid == 2:     # 人员
-            newMaterial = Worker(strMaterial.name)
-        elif strMaterial.typeid == 3:     # 设备
-            newMaterial = Machine(strMaterial.name)
+        if resource_dict['typeid'] == 1:       # 材料
+            new_resource = Material(resource_dict['name'], 
+                                    resource_dict['unit'], 
+                                    resource_dict['price']) # 区分新建和导入
+        elif resource_dict['typeid'] == 2:     # 人员
+            new_resource = Worker(resource_dict['name'])
+        elif resource_dict['typeid'] == 3:     # 设备
+            new_resource = Machine(resource_dict['name'])
 
-        return newMaterial
+        return new_resource
 
 
 class Inner():

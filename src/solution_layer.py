@@ -16,6 +16,8 @@ class Factory(Frame):
 
     结算单位
     资源的管理来源；
+
+    factory is base element to run. It has a update clock. 
     '''
 
     def __init__(self, blueprint) -> None:
@@ -28,12 +30,6 @@ class Factory(Frame):
     def add_resource(self):
         ''' 
         添加资源
-        '''
-        pass
-
-    def add_rule(self):
-        ''' 
-        添加规则
         '''
         pass
 
