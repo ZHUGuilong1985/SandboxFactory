@@ -1,0 +1,70 @@
+{
+    "factory": [
+        {
+            "name": "复材厂",
+            "_description": "测试案例",
+            "points": [
+                {
+                    "name": "库房",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                },
+                {
+                    "name": "铺层工位2",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                },
+                {
+                    "name": "固化",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                },
+                {
+                    "name": "铺层工位2",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                },
+                {
+                    "name": "切割",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                },
+                {
+                    "name": "检验",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                },
+                {
+                    "name": "成品库",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                }
+            ]
+        },
+        {
+            "name": "复材厂2",
+            "_description": "一个示范工厂",
+            "points": [
+                {
+                    "name": "库房",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                },
+                {
+                    "name": "库房",
+                    "_description": " ",
+                    "left": [],
+                    "right": []
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+data/
+__pycache__/
+
+*.log
+*.pyc
+*.drawio
+
+*.pptx
+*.xlsx
+*.docx
+*.pdf
+
+*.odt
+
+.DS_Store
