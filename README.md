@@ -77,61 +77,7 @@ cost？
 设备启动运营的非循环成本（热机、冷却等等；）
 流出速度，制造速度，50min/件，2件/hour；
 
-旭光，
-
-
-                ┌───────────────┐
-                │    Animal     │
-                └───────────────┘
-                        │
-           ┌────────────┴────────────┐
-           │                         │
-           ▼                         ▼
-    ┌─────────────┐           ┌─────────────┐
-    │   Mammal    │           │    Bird     │
-    └─────────────┘           └─────────────┘
-           │                         │
-     ┌─────┴──────┐            ┌─────┴──────┐
-     │            │            │            │
-     ▼            ▼            ▼            ▼
-┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
-│   Dog   │  │   Bat   │  │ Parrot  │  │ Ostrich │
-└─────────┘  └─────────┘  └─────────┘  └─────────┘
-
-class Student(object):
-
-    def __init__(self):
-        self.name = 'Michael'
-
-    def __getattr__(self, attr):
-        if attr=='score':
-            return 99
-
-
-
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-Complex is better than complicated.
-Flat is better than nested.
-Sparse is better than dense.
-Readability counts.
-Special cases aren't special enough to break the rules.
-Although practicality beats purity.
-Errors should never pass silently.
-Unless explicitly silenced.
-In the face of ambiguity, refuse the temptation to guess.
-There should be one-- and preferably only one --obvious way to do it.
-Although that way may not be obvious at first unless you're Dutch.
-Now is better than never.
-Although never is often better than *right* now.
-If the implementation is hard to explain, it's a bad idea.
-If the implementation is easy to explain, it may be a good idea.
-Namespaces are one honking great idea -- let's do more of those!
-
 # 达到什么样的目的？
-
-
 
 # 程序如何来用？
 
@@ -165,8 +111,6 @@ Namespaces are one honking great idea -- let's do more of those!
 3. 前面有几个发生器；
 4. 后面有一个收集器；
 5. 计算产能和费用
-
-
 
 2023-10-03:
 1. 加入一个材料，在里面流动；
@@ -227,7 +171,6 @@ layout (大布局) > factory（工厂） > workshop（车间） > section(工段
 1. 一个需要解决的问题：
 如何定义半成品
 
-
 # 典型工作流程
 
 1. 打开界面
@@ -261,7 +204,6 @@ layout (大布局) > factory（工厂） > workshop（车间） > section(工段
 3. 人员
 4. 设备；
 '''
-
 
 # 有用的资料
 
@@ -330,8 +272,6 @@ layout (大布局) > factory（工厂） > workshop（车间） > section(工段
 (2) PythonでJSON出力する際、日本語が文字化けする件 - Qiita. https://qiita.com/kurousa/items/f59ea18db9e33ef446f0.
 (3) Python JSON encoding - Stack Overflow. https://stackoverflow.com/questions/983855/python-json-encoding.
 (4) Pythonでエンコーディングを指定してJSONファイルの文字コード .... https://ittrip.xyz/python/resolve-json-encoding-issue-python.
-
-
 
 # 代表事项
 
