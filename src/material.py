@@ -14,6 +14,11 @@ from enum import Enum
 
 class MaterialUnit(Enum):
     PCS = 0
+    M2 = 1
+    M3 = 2
+    kg = 3
+    L = 4
+    m = 5
 
 
 class MaterialType(Enum):
@@ -57,6 +62,15 @@ class Resource:
     def report(self):
         print("I'm running! ")
 
+    def get_hash_code(self, seed):  # 生产hash码
+        # todo
+        return 'hashcode' + seed
+    
+    def check_id(self):
+        # check the id is legitimate or not. 
+
+        return True
+
 
 class Material(Resource):
     ''' 
@@ -70,26 +84,49 @@ class Material(Resource):
                  price=0):
 
         # base info
-        self.typeid = MaterialType.MATERIAL    
+        self.typeid = MaterialType.MATERIAL
         self.id = ''    # auto created
         self.name = name
+
         self.unit = unit   # 单位
         self.price = price   # 单价
 
         self.is_work = None     #
-         
+
+
+class SalaryType(Enum):
+    MONTH = 0
+    YEAR = 1
+    DAY = 2
+    HOUR = 3
 
 
 class Worker(Resource):
     # 操作者
 
-    def __init__(self, name):
+    def __init__(self, name,
+                 id=None,
+                 salary_type=SalaryType.MONTH,
+                 salary=0):
 
-        self.__name = name  # worker type
-        self.id = ''
+        # base info
+        self.typeid = MaterialType.WORKER
+        self.name = name  # worker type
+        if id:  # load
+            if self.check_id() : # check the id is 
+                return False
+            self.id = id
+        else:   # create
+            self.id = self.get_hash_code(self.name)
+
+        self.salary_type = salary_type
+        self.salary = salary   # 工资
+
+        #
 
         self.consume = ""   # 消耗，佣金
         self.costs = ""     # 保留工资
+
         self.sub_resource = []  #
         self.vssel = None       #
 
@@ -106,17 +143,29 @@ class Machine(Resource):
     设备
     '''
 
-    def __init__(self, name):
-        self.__name = name
-        self.__id = ""
+    def __init__(self, name,
+                 model=None,
+                 support_list=None,
+                 cost=0,
+                 financial_life=10):
 
-        self.__energyConsumption = 0
-        self.__energy = "压缩空气"
+        # base info
+        self.typeid = MaterialType.MACHINE
+        self.name = name
+        self.id = ''
 
-        self.report()  # 报告
+        self.model = ''  # "规格型号": "6mX3mX1.5m",
+
+        self.support_list = []  # 运维支持
+
+        self.cost = 0  # 采购成本
+        self.financial_life = 10  # 财务寿命 ,10年
+
+        # 运维费用，根据运维支持、采购成本、财务寿命等综合自动结算。
+        self.other_cost = []  # 维修成本，校验成本等等
 
     def report(self):
-        print(self.__name)
+        pass
 
 
 class MaterialOperator:
@@ -151,34 +200,45 @@ class ResourceFactory:
     def __init__(self):
         pass
 
-    def new_resource(resource_dict):  # 通过输入，来生产不同材料的实例；
+    def load_resource(self,resource_dict):  # 通过输入，来生产不同材料的实例；
+        # with id.
 
-        if resource_dict['typeid'] == 1:       # 材料
-            new_resource = Material(resource_dict['name'], 
-                                    resource_dict['unit'], 
-                                    resource_dict['price']) # 区分新建和导入
-        elif resource_dict['typeid'] == 2:     # 人员
-            new_resource = Worker(resource_dict['name'])
-        elif resource_dict['typeid'] == 3:     # 设备
-            new_resource = Machine(resource_dict['name'])
+        if resource_dict['typeid'] == MaterialType.MATERIAL:       # 材料
+            new_resource = Material(resource_dict['name'],
+                                    resource_dict['id'],
+                                    resource_dict['unit'],
+                                    resource_dict['price'])
+        elif resource_dict['typeid'] == MaterialType.WORKER:     # 人员
+            new_resource = Worker(resource_dict['name'],
+                                  resource_dict['id'],
+                                  resource_dict['salary_type'],
+                                  resource_dict['salary'])
+        elif resource_dict['typeid'] == MaterialType.MACHINE:     # 设备
+            new_resource = Machine(resource_dict['name'],
+                                   resource_dict['id'],
+                                   resource_dict['model'],
+                                   resource_dict['support_list'],
+                                   resource_dict['cost'],
+                                   resource_dict['financial_life'])
 
         return new_resource
 
+    def create_resource(self,resource_dict):
+        # without id.
 
-class Inner():
-    # 内部工位
-    def __init__(self, filter, min, max):
-        self.__filter = filter      # 定义接口能够处理的物料
-        self.__minFlow = min        # 最小流量
-        self.__maxFlow = max        # 最大流量，一般不起作用；
+        if resource_dict['typeid'] == MaterialType.MATERIAL:       # 材料
+            new_resource = Material(resource_dict['name'],
+                                    resource_dict['unit'],
+                                    resource_dict['price'])
+        elif resource_dict['typeid'] == MaterialType.WORKER:     # 人员
+            new_resource = Worker(resource_dict['name'],
+                                  resource_dict['salary_type'],
+                                  resource_dict['salary'])
+        elif resource_dict['typeid'] == MaterialType.MACHINE:     # 设备
+            new_resource = Machine(resource_dict['name'],
+                                   resource_dict['model'],
+                                   resource_dict['support_list'],
+                                   resource_dict['cost'],
+                                   resource_dict['financial_life'])
 
-
-class Outter():
-    ''' 
-    外部工位
-    '''
-
-    def __init__(self, filter, min, max):
-        self.__filter = filter          # 定义接口能够处理的物料
-        self.__minFlow = min            # 最小流量
-        self.__maxFlow = max            # 最大流量
+        return new_resource

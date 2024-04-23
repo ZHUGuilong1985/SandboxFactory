@@ -122,7 +122,7 @@ class Position:
         self.name = name
         self.real_material = None   # 所装材料
         # self.quantity = 0
-        self.volume = volume        # 容量。0 代表不限量
+        self.volume = volume        # 容量. 0 代表不限量
         self.filter = filter        # 按照名字过滤
         self.pst_tp = pst_tp          # in,out,hold,other
 
@@ -152,7 +152,7 @@ class Vessel:
 
         self.positions = []         # 容器
         self.timer = 0              # 计时器, min
-        self.isProcessing = False   # 是否在反应中，反应中，输入、输出均锁定；
+        self.is_processing = False   # 是否在反应中，反应中，输入、输出均锁定；
 
         self.formula = formula          # 公式
 
@@ -198,11 +198,11 @@ class Vessel:
             就删除原来的物料，
             再添加新的物料
         '''
-        if not self.isProcessing:           # 没有在反应中
+        if not self.is_processing:           # 没有在反应中
             if self.check_condition():      # 符合反应条件，启动反应
                 self.timer = 0              # 重置计时器
                 self.timer += TIME_UNIT     # 加上一个时间周期
-                self.isProcessing = True    # 锁定进程
+                self.is_processing = True    # 锁定进程
                 return
             else:   # 不符合反应条件
                 return
@@ -222,7 +222,7 @@ class Vessel:
                         pass
                 # 重置参数
                 self.timer = 0
-                self.isProcessing = False
+                self.is_processing = False
             else:
                 pass
 
@@ -241,7 +241,7 @@ class Vessel:
 
 class Connection:
     '''
-    定义连接，相当于胶带。
+    定义连接
     '''
 
     def __init__(self, plug, socket):  # 创建连接
@@ -249,10 +249,10 @@ class Connection:
         self.socket = socket
 
         # 两边记录匹配
-        self.plug.connection = self
+        self.plug.connection = self  # return the connection.
         self.plug.match_interface = self.socket
 
-        self.socket.connection = self
+        self.socket.connection = self   # return the connection.
         self.socket.match_interface = self.plug
 
         print("{}和{}建立连接".format(self.plug.parent.name, self.socket.parent.name))
@@ -270,9 +270,8 @@ class Connection:
 
     def transport(self, num):
         '''
-        从插头向插座传递物料
+        transport objects from plug to socket. 
         本质上是position之间的物资传递？
-
         '''
 
         # 没有位置，退出
@@ -332,7 +331,7 @@ class Interface:
 
 class Plug(Interface):
     '''
-    插头, plug, 公头, 阳头
+    插头, plug
     '''
 
     def __init__(self, parent, id, name=None):
@@ -356,12 +355,13 @@ class Socket(Interface):
     '''
 
     def __init__(self, parent, id, name=None):
+
         self.__name = name
 
         self.parent = parent  # 插槽
         self.id = id          # 接口编号，实际上就是数组的编号；通过parent和id可以连接到接口
 
-        # self.filters = None     # 过滤器
+        # self.filters = None # 过滤器
 
         self.match_interface = None     # 为空，代表为未连接
         self.connection = None          # 为空，代表为未连接
@@ -371,34 +371,17 @@ class Socket(Interface):
 
 
 class Point(Element, Route):
-    '''
-    点：
-    1. 装载物；; N个插座（入口）、N个插头（出口）
 
-    流动实现的原理：
-    1. 每个节点内，存在3个区域：
-        待处理区：  暂存
-        处理区：    处理
-        以完成区：  暂存
-    2. 每个周期内，做的事情：
-        a. 填充待处理区，即从上一个阶段的已完成区拿去物料；
-        b. 处理区，从待处理区域抓取物料，处理；
-        c. 以完成区域填充待处理区域。
-    3. 认为，内部的3个区域是行动一致的，不需要时间周期；
-        Preparation area，对应interface，及多个
-        Processing area 
-        Completion area，对应interface，及多个
-    4. 每个时钟周期，内做3个事情；
-        顺序：
-        b. 一起做处理、一起做处理、一起完成？反应同步；
-    '''
-
-    def __init__(self, name, socket_num=4, plug_num=4):
+    def __init__(self, name):
         '''
-        创建点
-        name: 对象名；
+        it contains sockets, vessel and plugs. 
+        between socket and plug, use connection. 
+        in sockets, vessel and plugs, have positions. 
         '''
         self.name = name  # 名称
+
+        socket_num = 4
+        plug_num = 4
 
         self.sockets = []
         for i in range(1, socket_num):
@@ -409,7 +392,7 @@ class Point(Element, Route):
             self.plugs.append(Plug(self, i))
 
         self.vessel = None                  # 容器
-        self.draw()                         # 画其他元素；
+
         Element.element_list.append(self)   # 登记到类列表
 
         # 计算器，实现物料的流动；每一个节点流动，实现整体的流动；
@@ -430,14 +413,15 @@ class Point(Element, Route):
 
     def fill_sockets(self):
         '''
-        psts1 -> psts2. 
+        插孔
+        psts1 -> psts2
         不同的是，一一对应；
         1. socket, 按socket填充；1对1的填充，按照匹配来；
         内部流速，无限大
         '''
         for i in self.sockets:
             if i.match_interface != None:  # 已匹配
-                translate_Between_Positions(
+                translate_between_positions(
                     i.match_interface.position, i.position, FLOW_RATE)
 
     def fill_vessel(self):
@@ -448,19 +432,20 @@ class Point(Element, Route):
 
         for i in self.vessel.positions:
             if i.pst_tp == "in":
-                # 从插头处获取材料；
+                # 从插头处获取材料
                 for j in self.sockets:  # point 的 sockets
-                    translate_Between_Positions(j.position, i, FLOW_RATE)
+                    translate_between_positions(j.position, i, FLOW_RATE)
 
     def fill_plugs(self):
         '''
-        3. plug, 按plug填充；    多对1的填充；可以多个出口出材料
+        插头
+        3. plug, 按plug填充； 多对1的填充；可以多个出口出材料
         todo, 需要解决堆积的问题；
         '''
         for i in self.plugs:     # 出口
             for j in self.vessel.positions:    # 反应器
                 if j.pst_tp == "out":
-                    translate_Between_Positions(j, i.position, FLOW_RATE)
+                    translate_between_positions(j, i.position, FLOW_RATE)
 
     def refresh_pre(self):
         '''
@@ -492,11 +477,7 @@ class Point(Element, Route):
 
 
 class PointFactory():
-    '''
-    站点生成器
-    '''
     # 生成器
-    pass
 
     def __init__(self):
         pass
@@ -658,7 +639,7 @@ def main():
     print("Finish.")
 
 
-def translate_Between_Positions(p1: Position, p2: Position, num: int):
+def translate_between_positions(p1: Position, p2: Position, num: int):
     '''
     在position之间传递物资
 

@@ -1,7 +1,8 @@
 from material import ResourceFactory
-from solution_layer import Factory
+from workshop import Factory
 
 from layout import Layout
+from design_manager import DesignManager
 
 class Sandbox():
     '''
@@ -16,39 +17,22 @@ class Sandbox():
     8. 数据分析和展示
     '''
 
-    def __init__(self,file_path = None): 
+    def __init__(self, file_path=None):
+        # resource list, include resource, formula, station, section, workshop, factory
+        # couple of layouts. include layouts
 
-        
+        self.dict_all = None
 
-        if file_path:
-            self.layout[0] = self.load_resource_from_disk(file_path)  # 导入默认文件
-        else:
-            self.layout[0] = self.load_resource_from_disk('./default.json')
+        self.design_manager = None  # 设计管理器
+        self.layouts = []
 
-
-        self.resource = None  # 资源
-        self.instance = None  # 实例
+        self.load_data_from_disk(file_path)  # load data
 
 
-        self.ftys = []  # 工厂列表
+        self.design_manager = self.new_design_manager(self.dict_all["design_data"])
+        self.layouts[0] = self.new_layout(self.dict_all["layout"])
 
-        self.ftys[0].build(self.resource['factories'][0])  # 建造第一工厂
 
-    def init_objects(self):
-        self.layout = []
-
-    def load_resource(self, resource):
-        # read resource from dict.
-
-        self.resource = resource
-
-    def instance_all(self):
-        # 将资源里面的所有材料全部初始化
-        materials_items = self.resource['materials']
-        material_list = []
-        material_factory = ResourceFactory()
-        for item in materials_items:
-            material_list.append(material_factory.new_resource(item))
 
     def build_factory(self):
         # build factory
@@ -59,24 +43,32 @@ class Sandbox():
         pass
 
     def run(self):
-        #
         print("sandbox running. ")
 
-    def new_layout(self):
-        # 新建
+    def new_layout(self, dict):
+        # create layout.
 
-        pass
+        lyt = Layout(dict)
+        if lyt:
+            return lyt
+        else:
+            return None
 
-    def new_element(self, element):
-        # 新建
-        
-        pass
+    def new_design_manager(self,dict): 
+        dm = DesignManager(dict)
+        if dm:
+            return dm
+        else:
+            return None
 
-    def write_resource_to_disk(self,layout,file_path):
+
+    def write_data_to_disk(self, layout, file_path):
         # write resource to disk
         pass
 
-    def read_resource_from_disk(self,file_path):
+    def load_data_from_disk(self, file_path):
         # read resource from disk
-        pass
-
+        if file_path:
+            self.dict_all = self.load_data_from_disk(file_path)  # 导入默认文件
+        else:
+            self.dict_all = self.load_data_from_disk('./default.json')

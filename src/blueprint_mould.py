@@ -33,10 +33,10 @@ elements_list = [
 
 links_list = [
     {
-        "IN_ID":        1,
-        "PLUG_ID":      25,
-        "OUT_ID":       2,
-        "SOCKET_ID":    51
+        "IN_ID":        1,  # 链接对象
+        "PLUG_ID":      25, # 插头编号
+        "OUT_ID":       2,  # 链接对象
+        "SOCKET_ID":    51  # 插座编号
     }, {
         "IN_ID":        1,
         "PLUG_ID":      25,
@@ -83,6 +83,8 @@ str_multi_channel = {
     "elements_list":    [],     # 元素清单
     "links_list":       [],     # 连接清单
 
+    # 对于frame，
     "inputs_list":      [],     # 输入接口
     "outputs_list":     []     # 输出接口
+
 }

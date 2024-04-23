@@ -11,11 +11,7 @@ import blueprint_mould
 from constant import TIME_UNIT
 
 DEFAULT_BLUEPRINT = "复合材料工厂"
-DEFAULT_BLUEPRINT2 = {
-
-
-
-}
+DEFAULT_BLUEPRINT2 = {}
 
 
 class Blueprint():

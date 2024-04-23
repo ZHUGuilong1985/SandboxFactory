@@ -1,6 +1,8 @@
 # instance class
 
 class Instance:
-    pass
 
+    def __init__(self):
+        self.instance_id = None
+        self.quantity = 0
 
