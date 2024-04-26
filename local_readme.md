@@ -385,3 +385,29 @@ layout (大布局) > factory（工厂） > workshop（车间） > section(工段
     4. 每个时钟周期，内做3个事情；
         顺序：
         b. 一起做处理、一起做处理、一起完成？反应同步；
+
+
+
+## formula
+
+   典型配方
+    1. support:   machine1, 需要电  , worker1,    需要现金；
+    2. input:     inner1，  inner2，
+    3. output:    outter1,  outter2, 
+
+    3. 过程
+
+    (in station2): 材料1 x20 + 材料2 x 12 -(5min x 12，可暂停)-> 产品1 x2 +废弃物2 x3
+
+    适用于station：
+
+    内部逻辑关系梳理：
+    1. 硬件需要能量输入，运行
+
+    配置工位:  
+        1. station ID
+        2. station Name
+        3. equipments
+        4. workers
+        5. toolings
+        有一个基础能耗，基础的启动前置时间，完成后置时间

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 'material mould. 定义具体的材料、设备、人员等等，相当于Excel表格。'
 
 __author__ = 'ZHU Guilong'
@@ -8,16 +7,15 @@ __author__ = 'ZHU Guilong'
 from constant import TIME_UNIT
 from enum import Enum
 
+from definition import Definition
 
 # class LogicType(Enum):
-
 #     NEW = 1             # 发生器 +
 #     MANUFACTURE = 2     # 制造
 #     RECYCLE = 3         # 回收 -
 #     TRANSPORT = 4       # 传送 ->
 #     STORAGE = 5         # 存储 =
 #     CHANNEL = 6         # 多通道
-
 
 # class ItemsType(Enum):
 #     IN = 1
@@ -26,6 +24,7 @@ from enum import Enum
 
 
 class MaterialPosition:
+
     def __init__(self, tp, material_name, num):
 
         self.material_name = material_name
@@ -36,47 +35,23 @@ class MaterialPosition:
         # self.speed = 20
 
 
-class Formula():
-    '''
-    典型配方：
-    1. support:     machine1,   需要电  , worker1,    需要现金；
-    2. input:         inner1，        inner2，
-    3. output:         outter1,         outter2, 
+class Formula(Definition):
+    '''    '''
 
-    3. 过程
+    def __init__(self, id=None, name=None):
+        super().__init__(id)
 
-    (in station2): 材料1 x20 + 材料2 x 12 -(5min x 12，可暂停)-> 产品1 x2 +废弃物2 x3
-
-    适用于station：
-
-    内部逻辑关系梳理：
-    1. 硬件需要能量输入，运行；
-    配置工位：
-    1. station ID
-    2. station Name
-    3. equipments
-    4. workers
-    5. toolings
-    有一个基础能耗，基础的启动前置时间，完成后置时间；
-    '''
-
-    def __init__(self,
-                 name,
-                 id=None,
-                 str_formula=None):
-        # str_formula, dict
-
-        self.name = name
         self.id = id
+        self.name = name
 
-
-        self.support = []   # 电力
-        self.input = []     # 输入
-        self.output = []    # 输出
-        self.matching_table = []   # 匹配表，传送装置才会有。
+        self.support = []  #
+        self.input = []  # 输入
+        self.output = []  # 输出
+        self.matching_table = []  # 匹配表，传送装置才会有。
         self.time = str_formula["time"]
         self.can_pause = str_formula["canPause"]
 
+        self.desription = '一个公式的描述。'
 
     def add_input(self, dict):
         # 增加一条输入
@@ -97,10 +72,16 @@ class Formula():
         for item in lst:
             self.add_input(item)
 
-    def set_output(self,lst):
+    def set_output(self, lst):
         pass
 
-    def set_support(self,lst):
+    def set_support(self, lst):
+        # 只添加id，还是需要找到对应的对象？
+
+        self.add_support.clear()  # 清空
+        for item in lst: 
+            self.add_support(item)
+
         pass
 
     def set_matching_table(self, lst):
@@ -109,14 +90,71 @@ class Formula():
     def translation(self):
         pass
 
+def ResourceList():
+    def __init__(self):
+
+        self.lst = []
+
+     
 
 class FormulaFactory:
 
-    def load_formula(self, formula_dict):  # 通过输入，来生产公式实例
+    def load_formula(self, dict):  # 通过输入，来生产公式实例
 
-        new_formula = Formula(formula_dict['name'],
-                              formula_dict['id']    )
+        new_formula = Formula(dict['id'],dict['name'])
+
+        # 设置信息
+        new_formula.set_support(dict['support'])
+        new_formula.set_input(dict['inputs'])
+        new_formula.set_output(dict['outputs'])
+        new_formula.set_time(dict['time'])
+        new_formula.set_can_pause(dict['canPause'])
+
+
         return new_formula
+
+    '''
+    {
+        "name": "产品A加工",
+        "_description": "在加工中心生产零件。",
+        "id": 1,
+        "support": [
+            {   
+                "id":"xxxx-xxxx-xxxx-xxxx",
+                "名称": "机床",
+                "数量": 1
+            },
+            {
+                "名称": "操作工",
+                "数量": 1
+            }
+        ],
+        "inputs": [
+            {
+                "名称": "铝合金",
+                "数量": 20
+            },
+            {
+                "名称": "切削液",
+                "数量": 50
+            }
+        ],
+        "outputs": [
+            {
+                "名称": "产品A",
+                "数量": 1
+            },
+            {
+                "名称": "废液",
+                "数量": 1
+            }
+        ],
+        "time": 120,
+        "can_pause": true,
+        "logic": "LogicType.MANUFACTURE"
+    }
+
+    '''
 
     def create_formula(self, formula_dict):  # 通过输入，来生产公式实例
         return
