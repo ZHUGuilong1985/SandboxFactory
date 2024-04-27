@@ -93,30 +93,6 @@ def create_elements():
     2. 后期，从文件创建；
     '''
 
-    # # 设备
-    # autoclave = material.Machine("autoclave")
-    # oven = material.Machine("oven")
-    # CNC_machining_center = material.Machine("CNC_machining_center")
-
-    # # 人员
-    # operator = material.Worker("operator")
-
-    # # 材料
-    # prepreg = material.Material("prepreg")       # 预浸料
-    # epoxy_resin = material.Material("epoxy_resin")   # 环氧树脂
-
-    # # 其他
-    # compressed_air_800kpa = material.Material("compressed_air_800kpa")   # 压缩空气
-    # AC220v = material.Material("220v AC")
-    # AC380v = material.Material("380v AC")
-    # # 压缩氮气
-    # compressed_nitrogen = material.Material("compressed_nitrogen")
-    # # 普通water
-    # industrial_water = material.Material("industrial_water")
-    # waste_water = material.Material("waste_water")                       # 污水
-
-    # cutter = material.Material("cutter")     # 刀具
-
     # 新建公式，工艺
     formula_1 = solution.Formula("固化工艺", "")
     formula_2 = solution.Formula("切割工艺", "")

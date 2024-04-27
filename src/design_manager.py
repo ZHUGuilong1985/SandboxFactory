@@ -1,16 +1,16 @@
 from material import ResourceFactory
 
 
-class DesignManager: 
+class DesignManager:
     # manager all design resource.
 
     def __init__(self, dict):
-        
-        self.dict = dict # all the data. 
+
+        self.dict = dict  # all the data.
         self.material_list = []
 
-    def load_data(self): 
-        
+    def load_data(self):
+
         self.load_resource(self.dict["resource"])
         self.load_formulas()
         self.load_stations()
@@ -26,10 +26,9 @@ class DesignManager:
         for item in lst:
             self.material_list.append(material_factory.load_resource(item))
 
-    def load_formulas(self,lst):
+    def load_formulas(self, lst):
         # load formulas
 
-        
         pass
 
     def load_stations(self):
@@ -50,4 +49,3 @@ class DesignManager:
                 return item
 
         return None
-    

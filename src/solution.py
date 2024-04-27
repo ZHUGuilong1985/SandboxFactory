@@ -18,7 +18,9 @@ from definition import Definition
 import material
 import formula
 from constant import TIME_UNIT
-from constant import FLOW_RATE  # 默认最大流速 50 pcs
+from constant import FLOW_RATE
+
+from position import Position  # 默认最大流速 50 pcs
 
 '''
 主要功能：
@@ -195,12 +197,7 @@ def translate_between_positions(p1: Position, p2: Position, num: int):
             return
 
 
-class BaseBiulder():
-    def __init__(self) -> None:
-        pass
 
-    def build(self, dict=None):
-        pass
 
 
 if __name__ == '__main__':

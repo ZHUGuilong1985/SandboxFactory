@@ -4,6 +4,7 @@ from workshop import Factory
 from layout import Layout
 from design_manager import DesignManager
 
+
 class Sandbox():
     '''
     功能清单：
@@ -28,11 +29,9 @@ class Sandbox():
 
         self.load_data_from_disk(file_path)  # load data
 
-
-        self.design_manager = self.new_design_manager(self.dict_all["design_data"])
+        self.design_manager = self.new_design_manager(
+            self.dict_all["design_data"])
         self.layouts[0] = self.new_layout(self.dict_all["layout"])
-
-
 
     def build_factory(self):
         # build factory
@@ -54,18 +53,17 @@ class Sandbox():
         else:
             return None
 
-    def new_design_manager(self,dict): 
+    def new_design_manager(self, dict):
         dm = DesignManager(dict)
         if dm:
             return dm
         else:
             return None
 
-
     def write_data_to_disk(self, layout, file_path):
         # write resource to disk
         pass
-
+        
     def load_data_from_disk(self, file_path):
         # read resource from disk
         if file_path:

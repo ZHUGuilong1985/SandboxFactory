@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 'material mould. 定义具体的材料、设备、人员等等，相当于Excel表格。'
 
 __author__ = 'ZHU Guilong'
@@ -77,31 +78,22 @@ class Formula(Definition):
 
     def set_support(self, lst):
         # 只添加id，还是需要找到对应的对象？
-
         self.add_support.clear()  # 清空
         for item in lst: 
-            self.add_support(item)
-
+            obj = root_container. get_object_by_id(item['id'])
+            _dict = {"obj": obj, "qty": item['qty']}
+            self.add_support(_dict)
         pass
 
     def set_matching_table(self, lst):
         pass
 
-    def translation(self):
-        pass
-
-def ResourceList():
-    def __init__(self):
-
-        self.lst = []
-
-     
 
 class FormulaFactory:
 
     def load_formula(self, dict):  # 通过输入，来生产公式实例
 
-        new_formula = Formula(dict['id'],dict['name'])
+        new_formula = Formula(dict['id'], dict['name'])
 
         # 设置信息
         new_formula.set_support(dict['support'])
@@ -110,51 +102,7 @@ class FormulaFactory:
         new_formula.set_time(dict['time'])
         new_formula.set_can_pause(dict['canPause'])
 
-
         return new_formula
-
-    '''
-    {
-        "name": "产品A加工",
-        "_description": "在加工中心生产零件。",
-        "id": 1,
-        "support": [
-            {   
-                "id":"xxxx-xxxx-xxxx-xxxx",
-                "名称": "机床",
-                "数量": 1
-            },
-            {
-                "名称": "操作工",
-                "数量": 1
-            }
-        ],
-        "inputs": [
-            {
-                "名称": "铝合金",
-                "数量": 20
-            },
-            {
-                "名称": "切削液",
-                "数量": 50
-            }
-        ],
-        "outputs": [
-            {
-                "名称": "产品A",
-                "数量": 1
-            },
-            {
-                "名称": "废液",
-                "数量": 1
-            }
-        ],
-        "time": 120,
-        "can_pause": true,
-        "logic": "LogicType.MANUFACTURE"
-    }
-
-    '''
 
     def create_formula(self, formula_dict):  # 通过输入，来生产公式实例
         return

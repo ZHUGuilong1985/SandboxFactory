@@ -11,6 +11,8 @@ from abc import ABCMeta, abstractmethod
 from constant import TIME_UNIT
 from enum import Enum
 
+from definition import Definition
+
 
 class MaterialUnit(Enum):
     PCS = 0
@@ -37,7 +39,7 @@ class Route(metaclass=ABCMeta):
         pass
 
 
-class Resource:
+class Resource( Definition ):
     '''
     元素
     工厂所有元素的基础类；
@@ -45,10 +47,8 @@ class Resource:
     2. 材料，可以计算变质属性等动态属性；
     定义基础的属性
     '''
-
-    resource_list = []  # 总的元素列表
-
     def __init__(self):
+        super().__init__()
 
         self.name = ''
         self.id = None  # 用hash码解决id唯一的问题
@@ -122,7 +122,7 @@ class Worker(Resource):
         self.salary_type = salary_type
         self.salary = salary   # 工资
 
-        #
+        
 
         self.consume = ""   # 消耗，佣金
         self.costs = ""     # 保留工资
@@ -132,10 +132,8 @@ class Worker(Resource):
 
         self.is_work = True      # 是否正常工作
 
-        print(f'Worker {name} is created. ')
 
-    def update(self):
-        pass
+
 
 
 class Machine(Resource):

@@ -149,8 +149,8 @@
                 "_description": "在加工中心生产零件。",
                 "id": 1,
                 "support": [
-                    {   
-                        "id":"xxxx-xxxx-xxxx-xxxx",
+                    {
+                        "id": "xxxx-xxxx-xxxx-xxxx",
                         "名称": "机床",
                         "数量": 1
                     },
