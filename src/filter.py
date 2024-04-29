@@ -1,4 +1,4 @@
-
+# 添加一条信息，from
 
 class Filter:
     '''
@@ -24,4 +24,3 @@ class Filter:
             return True
         else:
             return False
-
