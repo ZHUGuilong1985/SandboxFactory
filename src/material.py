@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 'material mould. '
 
 __author__ = 'ZHU Guilong'
-
 
 from abc import ABCMeta, abstractmethod
 
@@ -30,6 +28,7 @@ class MaterialType(Enum):
 
 
 class Route(metaclass=ABCMeta):
+
     @abstractmethod
     def update(self):
         pass
@@ -39,7 +38,7 @@ class Route(metaclass=ABCMeta):
         pass
 
 
-class Resource( Definition ):
+class Resource(Definition):
     '''
     元素
     工厂所有元素的基础类；
@@ -47,13 +46,15 @@ class Resource( Definition ):
     2. 材料，可以计算变质属性等动态属性；
     定义基础的属性
     '''
-    def __init__(self):
+
+    def __init__(self, parent):
         super().__init__()
 
         self.name = ''
         self.id = None  # 用hash码解决id唯一的问题
 
-        self.resource_list.append(self)  # 加入到列表
+        self.cost = 0  # 资金？
+
         self.is_working = True
 
     def update(self):
@@ -62,36 +63,26 @@ class Resource( Definition ):
     def report(self):
         print("I'm running! ")
 
-    def get_hash_code(self, seed):  # 生产hash码
-        # todo
-        return 'hashcode' + seed
-    
     def check_id(self):
-        # check the id is legitimate or not. 
-
+        # check the id is legitimate or not.
         return True
 
 
 class Material(Resource):
     ''' 
-    材料的基础类型
-    可以是：材料、产品、水、电、气等；
+    材料的基础类型，可以是：材料、产品、水、电、气等
     '''
 
-    def __init__(self,
-                 name,
-                 unit=MaterialUnit.PCS,
-                 price=0):
+    def __init__(self, name, unit=MaterialUnit.PCS, price=0):
 
         # base info
         self.typeid = MaterialType.MATERIAL
-        self.id = ''    # auto created
         self.name = name
 
-        self.unit = unit   # 单位
-        self.price = price   # 单价
+        self.unit = unit  # 单位
+        self.price = price  # 单价
 
-        self.is_work = None     #
+        self.is_work = None  #
 
 
 class SalaryType(Enum):
@@ -104,36 +95,28 @@ class SalaryType(Enum):
 class Worker(Resource):
     # 操作者
 
-    def __init__(self, name,
-                 id=None,
-                 salary_type=SalaryType.MONTH,
-                 salary=0):
+    def __init__(self, name, id=None, salary_type=SalaryType.MONTH, salary=0):
 
         # base info
         self.typeid = MaterialType.WORKER
         self.name = name  # worker type
         if id:  # load
-            if self.check_id() : # check the id is 
+            if self.check_id():  # check the id is
                 return False
             self.id = id
-        else:   # create
+        else:  # create
             self.id = self.get_hash_code(self.name)
 
         self.salary_type = salary_type
-        self.salary = salary   # 工资
+        self.salary = salary  # 工资
 
-        
-
-        self.consume = ""   # 消耗，佣金
-        self.costs = ""     # 保留工资
+        self.consume = ""  # 消耗，佣金
+        self.costs = ""  # 保留工资
 
         self.sub_resource = []  #
-        self.vssel = None       #
+        self.vssel = None  #
 
-        self.is_work = True      # 是否正常工作
-
-
-
+        self.is_work = True  # 是否正常工作
 
 
 class Machine(Resource):
@@ -141,7 +124,8 @@ class Machine(Resource):
     设备
     '''
 
-    def __init__(self, name,
+    def __init__(self,
+                 name,
                  model=None,
                  support_list=None,
                  cost=0,
@@ -198,22 +182,19 @@ class ResourceFactory:
     def __init__(self):
         pass
 
-    def load_resource(self,resource_dict):  # 通过输入，来生产不同材料的实例；
+    def load_resource(self, resource_dict):  # 通过输入，来生产不同材料的实例；
         # with id.
 
-        if resource_dict['typeid'] == MaterialType.MATERIAL:       # 材料
-            new_resource = Material(resource_dict['name'],
-                                    resource_dict['id'],
+        if resource_dict['typeid'] == MaterialType.MATERIAL:  # 材料
+            new_resource = Material(resource_dict['name'], resource_dict['id'],
                                     resource_dict['unit'],
                                     resource_dict['price'])
-        elif resource_dict['typeid'] == MaterialType.WORKER:     # 人员
-            new_resource = Worker(resource_dict['name'],
-                                  resource_dict['id'],
+        elif resource_dict['typeid'] == MaterialType.WORKER:  # 人员
+            new_resource = Worker(resource_dict['name'], resource_dict['id'],
                                   resource_dict['salary_type'],
                                   resource_dict['salary'])
-        elif resource_dict['typeid'] == MaterialType.MACHINE:     # 设备
-            new_resource = Machine(resource_dict['name'],
-                                   resource_dict['id'],
+        elif resource_dict['typeid'] == MaterialType.MACHINE:  # 设备
+            new_resource = Machine(resource_dict['name'], resource_dict['id'],
                                    resource_dict['model'],
                                    resource_dict['support_list'],
                                    resource_dict['cost'],
@@ -221,18 +202,18 @@ class ResourceFactory:
 
         return new_resource
 
-    def create_resource(self,resource_dict):
+    def create_resource(self, resource_dict):
         # without id.
 
-        if resource_dict['typeid'] == MaterialType.MATERIAL:       # 材料
+        if resource_dict['typeid'] == MaterialType.MATERIAL:  # 材料
             new_resource = Material(resource_dict['name'],
                                     resource_dict['unit'],
                                     resource_dict['price'])
-        elif resource_dict['typeid'] == MaterialType.WORKER:     # 人员
+        elif resource_dict['typeid'] == MaterialType.WORKER:  # 人员
             new_resource = Worker(resource_dict['name'],
                                   resource_dict['salary_type'],
                                   resource_dict['salary'])
-        elif resource_dict['typeid'] == MaterialType.MACHINE:     # 设备
+        elif resource_dict['typeid'] == MaterialType.MACHINE:  # 设备
             new_resource = Machine(resource_dict['name'],
                                    resource_dict['model'],
                                    resource_dict['support_list'],
@@ -240,3 +221,12 @@ class ResourceFactory:
                                    resource_dict['financial_life'])
 
         return new_resource
+
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    # 测试代码
+    factory = ResourceFactory()

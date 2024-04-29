@@ -1,8 +1,10 @@
 from material import ResourceFactory
-from workshop import Factory
+from factory import Factory
 
 from layout import Layout
 from design_manager import DesignManager
+
+from init_default import SetupSystem
 
 
 class Sandbox():
@@ -29,9 +31,9 @@ class Sandbox():
 
         self.load_data_from_disk(file_path)  # load data
 
-        self.design_manager = self.new_design_manager(
-            self.dict_all["design_data"])
-        self.layouts[0] = self.new_layout(self.dict_all["layout"])
+        self.design_manager =  \
+            self.new_design_manager( self.dict_all["design_data"] )  # 创建设计管理器
+        self.layouts[0] = self.new_layout(self.dict_all["layout"])  # 创建layout
 
     def build_factory(self):
         # build factory
@@ -63,10 +65,21 @@ class Sandbox():
     def write_data_to_disk(self, layout, file_path):
         # write resource to disk
         pass
-        
+
     def load_data_from_disk(self, file_path):
         # read resource from disk
         if file_path:
-            self.dict_all = self.load_data_from_disk(file_path)  # 导入默认文件
+            self.dict_all = SetupSystem.load_setup(file_path)  # 导入默认文件
         else:
-            self.dict_all = self.load_data_from_disk('./default.json')
+            self.dict_all = SetupSystem.load_setup('./default.json')
+
+
+def main():
+    sb = Sandbox()
+    sb.run()
+
+
+if __name__ == '__main__':
+    sb = Sandbox()
+    sb.run()
+

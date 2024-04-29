@@ -141,14 +141,10 @@ def create_new_factory():
 def start():
     print('start...')
 
-
 def main():
-
     # 加载存在，可以在默认模板下，进行编辑。
-
     SetupSystem.load_setup('resouce.json')
 
-    #
     sandbox = Sandbox()  # 调试沙盒
 
     sandbox.load_resource('resouce.json')

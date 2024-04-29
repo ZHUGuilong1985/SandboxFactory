@@ -9,19 +9,16 @@ from id_maker import IdMaker
 
 class Element():
 
-    def __init__(self, id=None,root = None):
+    def __init__(self, root_container, id=None):
+        # root_container
 
         if id:
             self.id = id
         else:
             self.id = IdMaker.get_unique_id()
 
-        self.desription = ''        # 描述
-        self.root_container = None  #  dm or layout
-
-    def report_all_elements():
-        for i in Element.element_list:
-            i.report()
+        self.desription = ''                  # 描述
+        self.root_container = root_container  #  dm or layout
 
     def refresh():
         # 由于曾在嵌套，需要优化更新顺序！内部的需要提前优化；
@@ -37,5 +34,3 @@ class Element():
         # 后处理
         for i in Element.element_list:
             i.refresh_post()
-
-

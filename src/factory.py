@@ -1,4 +1,4 @@
-from solution import Frame, Point, Line
+from solution import Frame 
 
 class Factory(Frame):
     '''

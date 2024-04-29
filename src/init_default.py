@@ -6,10 +6,10 @@ import os
 # 配置文件
 SETUP_PATH = r'./src/resource.json'
 
-default_info = {
-    "database":     "default_database",
-    "version":      0.1,
-    "resources":    []
+default_info = {  
+    "database": "default_database",
+    "version": 0.1,
+    "resources": []
 }
 
 
@@ -39,7 +39,6 @@ def open_setup_file(file_path):
 
 
 def save_setup_file(file_path, info):
-
     with open(file_path, 'w', encoding='utf-8') as json_file:
         json.dump(info, json_file)
 
@@ -47,9 +46,7 @@ def save_setup_file(file_path, info):
 # country_dict = json.loads(json_string) # 将 JSON 字符串转换为 Python 字典
 # json_string  = json.dumps(data)        # 将 Python 字典转换为 JSON 字符串
 
-
 if __name__ == '__main__':
-
     d = SetupSystem.load_setup()
     # d['created_time'] = '2024-04-52'
     # SetupSystem.save_setup(d)

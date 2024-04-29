@@ -3,30 +3,24 @@
 
 # solution_layer
 # 基础求解代码
-
 'layout mould. Create a map. '
 
 __author__ = 'ZHU Guilong'
 
 import sys
-import time
-import copy
+import time, copy
+
 from abc import ABCMeta, abstractmethod
 from enum import Enum
 
 from definition import Definition
+from element import Element
 import material
 import formula
 from constant import TIME_UNIT
 from constant import FLOW_RATE
 
-from position import Position  # 默认最大流速 50 pcs
-
-'''
-主要功能：
-1. 从配置文件，生产站点；
-2. 定义组合站点；
-'''
+from position import Position
 
 
 class Route(metaclass=ABCMeta):
@@ -34,8 +28,6 @@ class Route(metaclass=ABCMeta):
     @abstractmethod
     def refresh(self):
         pass
-
-
 
 
 class Frame(Element):
@@ -47,8 +39,6 @@ class Frame(Element):
 
     def __init__(self):
         self.__aera = '20x30'  # 区域面积
-
-
 
 
 def main():
@@ -89,10 +79,10 @@ def main():
     p2 = Position(Filter("铝合金", None), 0, "容器_铝合金")
 
     V1 = Vessel("机械加工工位")
-    V1.insert_position(p1)          # 加入到插槽中
+    V1.insert_position(p1)  # 加入到插槽中
     V1.insert_position(p2)
 
-    A.vessel = V1    # 增加一个容器；
+    A.vessel = V1  # 增加一个容器；
 
     # -------------------------------------------------------------------------
     # 定义一个站点的反应容器 C
@@ -104,7 +94,7 @@ def main():
     V2.insert_position(p3)  # 加入到插槽中
     V2.insert_position(p4)
 
-    C.vessel = V2    # 增加一个容器；
+    C.vessel = V2  # 增加一个容器；
 
     # ----------------------------------
     # 定义一个站点的反应容器 D
@@ -116,7 +106,7 @@ def main():
     V3.insert_position(p5)  # 加入到插槽中
     V3.insert_position(p6)  # ?
 
-    D.vessel = V3    # 增加一个容器；
+    D.vessel = V3  # 增加一个容器；
 
     # 汇报
     print("Start...")
@@ -167,17 +157,17 @@ def translate_between_positions(p1: Position, p2: Position, num: int):
     # 计算 p2 实际能接收的物料量
     if p2.real_material == None:  # 没有材料，则有效空间就是容量
         free_space = p2.volume
-    else:   # 有材料，则是差值
+    else:  # 有材料，则是差值
         free_space = p2.volume - p2.real_material.amount
     # 计算能够传递的材料数量
     real_num = min(free_space, num)
 
     # case: plug 够
     if p1.real_material.amount >= real_num:  # 够
-        if p2.real_material == None:    # p2 没有物料
+        if p2.real_material == None:  # p2 没有物料
             p2.real_material = copy.copy(p1.real_material)  # 复制一份；
-            p1.real_material.amount -= real_num     # 减去
-            p2.real_material.amount = real_num      # 数量赋值
+            p1.real_material.amount -= real_num  # 减去
+            p2.real_material.amount = real_num  # 数量赋值
             return
 
         else:  # 插座有物料
@@ -185,19 +175,16 @@ def translate_between_positions(p1: Position, p2: Position, num: int):
             p2.real_material.amount += real_num
             return
 
-    else:       # 不够
+    else:  # 不够
         if p2.real_material == None:  # 插座没有物料
             p2.real_material = p1.real_material
-            p1.real_material = None                 # 直接转移
+            p1.real_material = None  # 直接转移
             return
 
-        else:   # 插座有物料
+        else:  # 插座有物料
             p2.real_material.amount += p1.real_material.amount
-            del p1.real_material    # 删除插头的；- todo: 不确定是删除，还是？
+            del p1.real_material  # 删除插头的；- todo: 不确定是删除，还是？
             return
-
-
-
 
 
 if __name__ == '__main__':

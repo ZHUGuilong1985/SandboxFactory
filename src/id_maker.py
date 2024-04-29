@@ -23,3 +23,11 @@ class IdMaker:
         s = str(t)
         md5_hash = hashlib.md5(s.encode()).hexdigest()
         return md5_hash.upper()
+
+
+def main():
+    print(IdMaker.get_unique_id())
+
+
+if __name__ == '__main__':
+    main()

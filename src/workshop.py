@@ -1,7 +1,7 @@
 # solution_layer
 # 基础求解代码
 
-from solution import Frame, Point
+from solution import Frame 
 
 class Workshop(Frame):
     ''' 车间
