@@ -47,21 +47,13 @@ class Resource(Definition):
     定义基础的属性
     '''
 
-    def __init__(self, parent):
-        super().__init__()
+    def __init__(self, parent, id=None, name=None, description=None):
+        super().__init__(parent, id)
 
-        self.name = ''
-        self.id = None  # 用hash码解决id唯一的问题
+        self.name = name
+        self.desription = description
 
-        self.cost = 0  # 资金？
-
-        self.is_working = True
-
-    def update(self):
-        pass
-
-    def report(self):
-        print("I'm running! ")
+        self.cost = 0  # 资金
 
     def check_id(self):
         # check the id is legitimate or not.
@@ -73,19 +65,22 @@ class Material(Resource):
     材料的基础类型，可以是：材料、产品、水、电、气等
     '''
 
-    def __init__(self, name, unit=MaterialUnit.PCS, price=0):
-        super().__init__(None)
+    def __init__(self, parent, id=None, name=None, description=None):
+        super().__init__(parent, id)
+        # unit=MaterialUnit.PCS, price=0
 
         # base info
         self.typeid = MaterialType.MATERIAL
         self.name = name
+        self.desription = description
 
-        self.unit = unit  # 单位
-        self.price = price  # 单价
+        self.unit = None   # 单位
+        self.price = None   # 单价
 
     def show_info(self):
-        print("Material: ", self.name, " unit: ",
-              self.unit, " price: ", self.price)
+        print("Material: ", self.name,
+              " unit: ",    self.unit,
+              " price: ",   self.price)
 
 
 class SalaryType(Enum):
@@ -98,32 +93,28 @@ class SalaryType(Enum):
 class Worker(Resource):
     # 操作者
 
-    def __init__(self, name, id=None, salary_type=SalaryType.MONTH, salary=0):
+    def __init__(self, parent, id=None, name=None, description=None):
+        super().__init__(parent, id)
 
         # base info
         self.typeid = MaterialType.WORKER
         self.name = name  # worker type
-        if id:  # load
-            if self.check_id():  # check the id is
-                return False
-            self.id = id
-        else:  # create
-            self.id = self.get_hash_code(self.name)
+        self.desription = description
 
-        self.salary_type = salary_type
-        self.salary = salary  # 工资
-
-        self.consume = ""  # 消耗，佣金
-        self.costs = ""  # 保留工资
+        # local info
+        self.salary_type = SalaryType.MONTH  # 工资类型
+        self.salary = 0     # 工资
+        self.consume = ""   # 消耗，佣金
+        self.costs = ""     # 保留工资
 
         self.sub_resource = []  #
-        self.vssel = None  #
-
-        self.is_work = True  # 是否正常工作
+        self.vssel = None       #
 
     def show_info(self):
-        print("Worker: ", self.name, " id: ", self.id, " salary: ",
-              self.salary, " salary_type: ", self.salary_type)
+        print("Worker: ",       self.name,
+              " id: ",          self.id,
+              " salary: ",      self.salary,
+              " salary_type: ", self.salary_type)
 
 
 class Machine(Resource):
@@ -131,30 +122,23 @@ class Machine(Resource):
     设备
     '''
 
-    def __init__(self,
-                 name,
-                 model=None,
-                 support_list=None,
-                 cost=0,
-                 financial_life=10):
+    def __init__(self, parent, id=None, name=None, description=None):
+        # self, name, model=None, support_list=None, cost=0, financial_life=10
+        super().__init__(parent, id)
 
         # base info
         self.typeid = MaterialType.MACHINE
         self.name = name
-        self.id = ''
+        self.desription = description
 
+        # local info
+        self.manufacturer = None  # 制造商
         self.model = ''  # "规格型号": "6mX3mX1.5m",
-
         self.support_list = []  # 运维支持
-
         self.cost = 0  # 采购成本
         self.financial_life = 10  # 财务寿命 ,10年
-
         # 运维费用，根据运维支持、采购成本、财务寿命等综合自动结算。
-        self.other_cost = []  # 维修成本，校验成本等等
-
-    def report(self):
-        pass
+        self.other_cost = []  # 维修成本，校验成本
 
     def show_info(self):
         print("Machine: ", self.name, " id: ", self.id)
@@ -196,24 +180,31 @@ class ResourceFactory:
         # with id.
 
         if resource_dict['typeid'] == MaterialType.MATERIAL.value:  # 材料
-            new_resource = Material(resource_dict['name'],
+            new_resource = Material(self.root,
                                     resource_dict['id'],
-                                    resource_dict['unit'],
-                                    resource_dict['price'])
-        elif resource_dict['typeid'] == MaterialType.WORKER.value:  # 人员
-            new_resource = Worker(resource_dict['name'],
-                                  resource_dict['id'],
-                                  resource_dict['salary_type'],
-                                  resource_dict['salary'])
-        elif resource_dict['typeid'] == MaterialType.MACHINE.value:  # 设备
-            new_resource = Machine(resource_dict['name'],
-                                   resource_dict['id'],
-                                   resource_dict['model'],
-                                   resource_dict['support_list'],
-                                   resource_dict['cost'],
-                                   resource_dict['financial_life'])
+                                    resource_dict['name'])
+            new_resource.price = resource_dict['price']
+            new_resource.unit = resource_dict['unit']
 
-        new_resource.root_container = self.root   # 加入到容器中
+        elif resource_dict['typeid'] == MaterialType.WORKER.value:  # 人员
+            new_resource = Worker(self.root,
+                                  resource_dict['id'],
+                                  resource_dict['name'])
+            new_resource.salary = resource_dict['salary']
+            new_resource.salary_type = resource_dict['salary_type']
+
+        elif resource_dict['typeid'] == MaterialType.MACHINE.value:  # 设备
+            new_resource = Machine(self.root,
+                                   resource_dict['id'],
+                                   resource_dict['name'])
+
+            new_resource.price = resource_dict['price']
+            new_resource.unit = resource_dict['unit']
+
+            # resource_dict['model']
+            # resource_dict['support_list']
+            # resource_dict['cost']
+            # resource_dict['financial_life']
 
         return new_resource
 

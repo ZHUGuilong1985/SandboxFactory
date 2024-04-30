@@ -5,7 +5,7 @@ from element import Element
 
 class Definition(Element):
 
-    def __init__(self, parent, name, description, solution):
+    def __init__(self, parent, id=None, name=None, description=None):
         '''
         name:
         id:
@@ -13,8 +13,9 @@ class Definition(Element):
         solution:    
         parent:      
         '''
-        super().__init__(parent)
-        pass
+        super().__init__(parent, id)
+        self.name = name
+        self.desription = description
 
 
 def main():

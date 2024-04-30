@@ -10,15 +10,16 @@ from id_maker import IdMaker
 class Element():
 
     def __init__(self, root_container, id=None):
-        # root_container
 
         if id:
             self.id = id
         else:
             self.id = IdMaker.get_unique_id()
 
-        self.desription = ''                  # 描述
-        self.root_container = root_container  #  dm or layout
+        self.root_container = root_container  # dm or layout
+
+        self.name = None
+        self.desription = None                  # 描述
 
     def refresh():
         # 由于曾在嵌套，需要优化更新顺序！内部的需要提前优化；

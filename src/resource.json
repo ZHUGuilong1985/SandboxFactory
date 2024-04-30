@@ -47,7 +47,7 @@
                 "unit": "pcs",
                 "price": 6000000,
                 "amout": 0,
-                "生产商": "山东泰达",
+                "manufacturer": "山东泰达",
                 "规格型号": "4mX8m",
                 "采购日期": "2023-10-10",
                 "运维费用": 20000,
@@ -76,7 +76,7 @@
                 "unit": "pcs",
                 "price": 5200000,
                 "financial_life": 10,
-                "生产商": "意特利",
+                "manufacturer": "意特利",
                 "needs": [
                     {
                         "类型": "",
@@ -105,23 +105,23 @@
                 "typeid": 1,
                 "name": "操作工",
                 "id": 8009,
-                "薪水制度": "月薪",
-                "price": 8000
+                "salary_type": "月薪",
+                "salary": 8000
             },
             {
                 "typeid": 1,
                 "name": "工艺工程师",
                 "id": 8009,
-                "薪水制度": "年薪",
-                "price": 200000
+                "salary_type": "年薪",
+                "salary": 200000
             },
             {
                 "typeid": 1,
                 "name": "部门经理",
                 "id": 8020,
                 "unit": "psc",
-                "薪水制度": "年薪",
-                "price": 250000,
+                "salary_type": "年薪",
+                "salary": 250000,
                 "amout": 0
             },
             {
@@ -129,8 +129,8 @@
                 "name": "操作工",
                 "id": 8009,
                 "unit": "psc",
-                "薪水制度": "月薪",
-                "price": 8000,
+                "salary_type": "月薪",
+                "salary": 8000,
                 "amout": 0
             },
             {
