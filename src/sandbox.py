@@ -20,20 +20,18 @@ class Sandbox():
     8. 数据分析和展示
     '''
 
-    def __init__(self, file_path=None):
+    def __init__(self, data_dict):
         # resource list, include resource, formula, station, section, workshop, factory
         # couple of layouts. include layouts
 
-        self.dict_all = None
+        self.dict_all = data_dict  # 数据字典
 
         self.design_manager = None  # 设计管理器
         self.layouts = []
 
-        self.load_data_from_disk(file_path)  # load data
-
         self.design_manager =  \
-            self.new_design_manager( self.dict_all["design_data"] )  # 创建设计管理器
-        self.layouts[0] = self.new_layout(self.dict_all["layout"])  # 创建layout
+            self.new_design_manager(self.dict_all["design_data"])  # 创建设计管理器
+        # self.layouts[0] = self.new_layout(self.dict_all["layout"])  # 创建layout
 
     def build_factory(self):
         # build factory
@@ -73,6 +71,10 @@ class Sandbox():
         else:
             self.dict_all = SetupSystem.load_setup('./default.json')
 
+    def packed_all_data(self):
+        # pack all data
+        return None
+
 
 def main():
     sb = Sandbox()
@@ -82,4 +84,3 @@ def main():
 if __name__ == '__main__':
     sb = Sandbox()
     sb.run()
-

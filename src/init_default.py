@@ -6,7 +6,7 @@ import os
 # 配置文件
 SETUP_PATH = r'./src/resource.json'
 
-default_info = {  
+default_info = {
     "database": "default_database",
     "version": 0.1,
     "resources": []

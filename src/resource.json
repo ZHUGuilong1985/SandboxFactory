@@ -5,7 +5,7 @@
     "design_data": {
         "resources": [
             {
-                "typeid": 1,
+                "typeid": 0,
                 "_comment": "",
                 "name": "预浸料",
                 "id": 8001,
@@ -13,35 +13,35 @@
                 "price": 2000
             },
             {
-                "typeid": 2,
+                "typeid": 0,
                 "name": "7075",
                 "id": 8002,
                 "unit": "kg",
                 "price": 80
             },
             {
-                "typeid": 3,
+                "typeid": 0,
                 "name": "天然气",
                 "id": 8003,
                 "unit": "m3",
                 "price": 80
             },
             {
-                "typeid": 3,
+                "typeid": 0,
                 "name": "交流电220v50Hz",
                 "id": 8004,
                 "unit": "kwh",
                 "price": 0.6
             },
             {
-                "typeid": 3,
+                "typeid": 0,
                 "name": "交流电380v50Hz",
                 "id": 8005,
                 "unit": "kwh",
                 "price": 0.6
             },
             {
-                "typeid": 3,
+                "typeid": 2,
                 "name": "热压罐",
                 "id": 8003,
                 "unit": "pcs",
@@ -70,7 +70,7 @@
                 ]
             },
             {
-                "typeid": 3,
+                "typeid": 2,
                 "name": "五轴数控加工中心",
                 "id": 8003,
                 "unit": "pcs",
@@ -102,21 +102,21 @@
                 "运维费用": 10000
             },
             {
-                "typeid": 2,
+                "typeid": 1,
                 "name": "操作工",
                 "id": 8009,
                 "薪水制度": "月薪",
                 "price": 8000
             },
             {
-                "typeid": 2,
+                "typeid": 1,
                 "name": "工艺工程师",
                 "id": 8009,
                 "薪水制度": "年薪",
                 "price": 200000
             },
             {
-                "typeid": 2,
+                "typeid": 1,
                 "name": "部门经理",
                 "id": 8020,
                 "unit": "psc",
@@ -125,7 +125,7 @@
                 "amout": 0
             },
             {
-                "typeid": 2,
+                "typeid": 1,
                 "name": "操作工",
                 "id": 8009,
                 "unit": "psc",
@@ -134,13 +134,11 @@
                 "amout": 0
             },
             {
-                "typeid": 2,
-                "name": "操作工",
+                "typeid": 0,
+                "name": "rmb",
                 "id": 8009,
-                "unit": "psc",
-                "薪水制度": "月薪",
-                "price": 8000,
-                "amout": 0
+                "unit": "yuan",
+                "price": 1
             }
         ],
         "formulas": [

@@ -71,21 +71,33 @@ class Formula(Definition):
         # 设置所有输入
         self.add_input.clear()  # 清空
         for item in lst:
-            self.add_input(item)
+            obj = self.root_container. get_object_by_id(item['id'])
+            _dict = {"obj": obj, "qty": item['qty']}
+            self.add_input(_dict)
+
+    def set_output(self, lst):
+        # 设置所有输入
+        self.add_output.clear()  # 清空
+        for item in lst:
+            obj = self.root_container. get_object_by_id(item['id'])
+            _dict = {"obj": obj, "qty": item['qty']}
+            self.add_output(_dict)
 
     def set_output(self, lst):
         pass
 
     def set_support(self, lst):
-        # 只添加id，还是需要找到对应的对象？
+        # 只添加id，还是需要找到对应的对象?
         self.add_support.clear()  # 清空
-        for item in lst: 
-            obj = root_container. get_object_by_id(item['id'])
+        for item in lst:
+            obj = self.root_container. get_object_by_id(item['id'])
             _dict = {"obj": obj, "qty": item['qty']}
             self.add_support(_dict)
-        pass
 
     def set_matching_table(self, lst):
+        pass
+
+    def set_data(self, dict):
         pass
 
 

@@ -13,14 +13,16 @@ import formula
 import formula_mould
 import solution
 
-from solution import Factory, Workshop, Section, Station
 from blueprint import Blueprint
+from factory import Factory
 
 from sandbox import Sandbox
 
 'main mould. 主要负责程序整体运行；'
 
 __author__ = 'ZHU Guilong'
+
+SETUP_PATH = r'./src/resource.json'  # 配置文件
 
 
 class Consume():
@@ -141,32 +143,27 @@ def create_new_factory():
 def start():
     print('start...')
 
+
 def main():
+
     # 加载存在，可以在默认模板下，进行编辑。
-    SetupSystem.load_setup('resouce.json')
+    data_dict = SetupSystem.load_setup()
 
-    sandbox = Sandbox()  # 调试沙盒
+    sandbox = Sandbox(data_dict)      # 调试沙盒
 
-    sandbox.load_resource('resouce.json')
+    # sandbox.load_resource()
+    sandbox.design_manager.show_info()
     sandbox.run()
 
-    check_configeration()    # 检查文件配置情况
-    read_configeration()     # 读取配置文件
-    start_ui()               # 启动UI界面，先从命令行接收指令；或者通过读取存档，来初始化工厂
-    create_new_factory()    # 新建一个空的工厂
-    start()                 # 启动
+    # check_configeration()    # 检查文件配置情况
+    # read_configeration()     # 读取配置文件
+    # start_ui()               # 启动UI界面，先从命令行接收指令；或者通过读取存档，来初始化工厂
+    # create_new_factory()    # 新建一个空的工厂
+    # start()                 # 启动
 
-    create_elements()  # 创建常用材料、素材
-
-    # 定义蓝图：定义工段连接
-    blueprint_1 = Blueprint("复合材料工厂", "")
-
-    myfty = Factory(blueprint_1)
-
-    myfty.build()  # 建设工厂
-    # myfty.ADD()
-
-    myfty.run()  # 启动
+    # # 打包数据，保存
+    # data_dict = sandbox.packed_all_data()
+    # SetupSystem.save_setup(data_dict)  # 保存配置信息
 
 
 if __name__ == '__main__':

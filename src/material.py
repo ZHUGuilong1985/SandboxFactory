@@ -22,9 +22,9 @@ class MaterialUnit(Enum):
 
 
 class MaterialType(Enum):
-    WORKER = 0
-    MACHINE = 1
-    MATERIAL = 2
+    MATERIAL = 0
+    WORKER = 1
+    MACHINE = 2
 
 
 class Route(metaclass=ABCMeta):
@@ -74,6 +74,7 @@ class Material(Resource):
     '''
 
     def __init__(self, name, unit=MaterialUnit.PCS, price=0):
+        super().__init__(None)
 
         # base info
         self.typeid = MaterialType.MATERIAL
@@ -82,7 +83,9 @@ class Material(Resource):
         self.unit = unit  # 单位
         self.price = price  # 单价
 
-        self.is_work = None  #
+    def show_info(self):
+        print("Material: ", self.name, " unit: ",
+              self.unit, " price: ", self.price)
 
 
 class SalaryType(Enum):
@@ -118,6 +121,10 @@ class Worker(Resource):
 
         self.is_work = True  # 是否正常工作
 
+    def show_info(self):
+        print("Worker: ", self.name, " id: ", self.id, " salary: ",
+              self.salary, " salary_type: ", self.salary_type)
+
 
 class Machine(Resource):
     '''
@@ -149,6 +156,9 @@ class Machine(Resource):
     def report(self):
         pass
 
+    def show_info(self):
+        print("Machine: ", self.name, " id: ", self.id)
+
 
 class MaterialOperator:
     '''
@@ -179,26 +189,31 @@ class MaterialOperator:
 
 class ResourceFactory:
 
-    def __init__(self):
-        pass
+    def __init__(self, root):
+        self.root = root    # 容器
 
     def load_resource(self, resource_dict):  # 通过输入，来生产不同材料的实例；
         # with id.
 
-        if resource_dict['typeid'] == MaterialType.MATERIAL:  # 材料
-            new_resource = Material(resource_dict['name'], resource_dict['id'],
+        if resource_dict['typeid'] == MaterialType.MATERIAL.value:  # 材料
+            new_resource = Material(resource_dict['name'],
+                                    resource_dict['id'],
                                     resource_dict['unit'],
                                     resource_dict['price'])
-        elif resource_dict['typeid'] == MaterialType.WORKER:  # 人员
-            new_resource = Worker(resource_dict['name'], resource_dict['id'],
+        elif resource_dict['typeid'] == MaterialType.WORKER.value:  # 人员
+            new_resource = Worker(resource_dict['name'],
+                                  resource_dict['id'],
                                   resource_dict['salary_type'],
                                   resource_dict['salary'])
-        elif resource_dict['typeid'] == MaterialType.MACHINE:  # 设备
-            new_resource = Machine(resource_dict['name'], resource_dict['id'],
+        elif resource_dict['typeid'] == MaterialType.MACHINE.value:  # 设备
+            new_resource = Machine(resource_dict['name'],
+                                   resource_dict['id'],
                                    resource_dict['model'],
                                    resource_dict['support_list'],
                                    resource_dict['cost'],
                                    resource_dict['financial_life'])
+
+        new_resource.root_container = self.root   # 加入到容器中
 
         return new_resource
 
