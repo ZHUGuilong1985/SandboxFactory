@@ -1,17 +1,34 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 'material mould. '
 
 __author__ = 'ZHU Guilong'
 
-
 from abc import ABCMeta, abstractmethod
 
 from constant import TIME_UNIT
+from enum import Enum
+
+from definition import Definition
+
+
+class MaterialUnit(Enum):
+    PCS = 0
+    M2 = 1
+    M3 = 2
+    kg = 3
+    L = 4
+    m = 5
+
+
+class MaterialType(Enum):
+    WORKER = 0
+    MACHINE = 1
+    MATERIAL = 2
 
 
 class Route(metaclass=ABCMeta):
+
     @abstractmethod
     def update(self):
         pass
@@ -21,7 +38,7 @@ class Route(metaclass=ABCMeta):
         pass
 
 
-class Resource:
+class Resource(Definition):
     '''
     元素
     工厂所有元素的基础类；
@@ -30,14 +47,13 @@ class Resource:
     定义基础的属性
     '''
 
-    resource_list = []  # 总的元素列表
+    def __init__(self, parent):
+        super().__init__()
 
-    def __init__(self):
+        self.name = ''
+        self.id = None  # 用hash码解决id唯一的问题
 
-        self.name = " "
-        self.id = " "
-
-        self.resource_list.append(self)  # 加入到列表
+        self.cost = 0  # 资金？
 
         self.is_working = True
 
@@ -47,48 +63,60 @@ class Resource:
     def report(self):
         print("I'm running! ")
 
+    def check_id(self):
+        # check the id is legitimate or not.
+        return True
+
 
 class Material(Resource):
     ''' 
-    材料的基础类型
-    可以是：材料、产品、水、电、气等；
-    数量，是在实力里面定义的：
-    结算可以相当于rmb一样，两个50pcs的材料，合并后，删除一个实例；
+    材料的基础类型，可以是：材料、产品、水、电、气等
     '''
 
-    def __init__(self, name, amount=0):
+    def __init__(self, name, unit=MaterialUnit.PCS, price=0):
+
+        # base info
+        self.typeid = MaterialType.MATERIAL
         self.name = name
-        self.amount = amount    # 数量
 
-        # 暂不处理
-        self.unit = "pcs"     # 单位
-        self.price = 0        # 单价
+        self.unit = unit  # 单位
+        self.price = price  # 单价
 
-        self.is_work = None        #
+        self.is_work = None  #
+
+
+class SalaryType(Enum):
+    MONTH = 0
+    YEAR = 1
+    DAY = 2
+    HOUR = 3
 
 
 class Worker(Resource):
-    ''' 
-    操作者
-    '''
+    # 操作者
 
-    def __init__(self, name):
-        self.__name = name
-        self.id = " "
+    def __init__(self, name, id=None, salary_type=SalaryType.MONTH, salary=0):
 
-        self.consume = ""   # 消耗，佣金
+        # base info
+        self.typeid = MaterialType.WORKER
+        self.name = name  # worker type
+        if id:  # load
+            if self.check_id():  # check the id is
+                return False
+            self.id = id
+        else:  # create
+            self.id = self.get_hash_code(self.name)
 
-        self.costs = ""     # 保留工资
+        self.salary_type = salary_type
+        self.salary = salary  # 工资
+
+        self.consume = ""  # 消耗，佣金
+        self.costs = ""  # 保留工资
 
         self.sub_resource = []  #
-        self.vssel = None       #
+        self.vssel = None  #
 
-        self.is_work = True      # 是否正常工作
-
-        print(f'Worker {name} is created. ')
-
-    def update(self):
-        pass
+        self.is_work = True  # 是否正常工作
 
 
 class Machine(Resource):
@@ -96,17 +124,30 @@ class Machine(Resource):
     设备
     '''
 
-    def __init__(self, name):
-        self.__name = name
-        self.__id = ""
+    def __init__(self,
+                 name,
+                 model=None,
+                 support_list=None,
+                 cost=0,
+                 financial_life=10):
 
-        self.__energyConsumption = 0
-        self.__energy = "压缩空气"
+        # base info
+        self.typeid = MaterialType.MACHINE
+        self.name = name
+        self.id = ''
 
-        self.report()  # 报告
+        self.model = ''  # "规格型号": "6mX3mX1.5m",
+
+        self.support_list = []  # 运维支持
+
+        self.cost = 0  # 采购成本
+        self.financial_life = 10  # 财务寿命 ,10年
+
+        # 运维费用，根据运维支持、采购成本、财务寿命等综合自动结算。
+        self.other_cost = []  # 维修成本，校验成本等等
 
     def report(self):
-        print(self.__name)
+        pass
 
 
 class MaterialOperator:
@@ -136,37 +177,56 @@ class MaterialOperator:
     pass
 
 
-class MaterialFactory:
+class ResourceFactory:
 
     def __init__(self):
         pass
 
-    def new_material(strMaterial):  # 通过输入，来生产不同材料的实例；
+    def load_resource(self, resource_dict):  # 通过输入，来生产不同材料的实例；
+        # with id.
 
-        if strMaterial.typeid == 1:   # 材料
-            newMaterial = Material(strMaterial.name)
-        elif strMaterial.typeid == 2:     # 人员
-            newMaterial = Worker(strMaterial.name)
-        elif strMaterial.typeid == 3:     # 设备
-            newMaterial = Machine(strMaterial.name)
+        if resource_dict['typeid'] == MaterialType.MATERIAL:  # 材料
+            new_resource = Material(resource_dict['name'], resource_dict['id'],
+                                    resource_dict['unit'],
+                                    resource_dict['price'])
+        elif resource_dict['typeid'] == MaterialType.WORKER:  # 人员
+            new_resource = Worker(resource_dict['name'], resource_dict['id'],
+                                  resource_dict['salary_type'],
+                                  resource_dict['salary'])
+        elif resource_dict['typeid'] == MaterialType.MACHINE:  # 设备
+            new_resource = Machine(resource_dict['name'], resource_dict['id'],
+                                   resource_dict['model'],
+                                   resource_dict['support_list'],
+                                   resource_dict['cost'],
+                                   resource_dict['financial_life'])
 
-        return newMaterial
+        return new_resource
+
+    def create_resource(self, resource_dict):
+        # without id.
+
+        if resource_dict['typeid'] == MaterialType.MATERIAL:  # 材料
+            new_resource = Material(resource_dict['name'],
+                                    resource_dict['unit'],
+                                    resource_dict['price'])
+        elif resource_dict['typeid'] == MaterialType.WORKER:  # 人员
+            new_resource = Worker(resource_dict['name'],
+                                  resource_dict['salary_type'],
+                                  resource_dict['salary'])
+        elif resource_dict['typeid'] == MaterialType.MACHINE:  # 设备
+            new_resource = Machine(resource_dict['name'],
+                                   resource_dict['model'],
+                                   resource_dict['support_list'],
+                                   resource_dict['cost'],
+                                   resource_dict['financial_life'])
+
+        return new_resource
 
 
-class Inner():
-    # 内部工位
-    def __init__(self, filter, min, max):
-        self.__filter = filter      # 定义接口能够处理的物料
-        self.__minFlow = min        # 最小流量
-        self.__maxFlow = max        # 最大流量，一般不起作用；
+def main():
+    pass
 
 
-class Outter():
-    ''' 
-    外部工位
-    '''
-
-    def __init__(self, filter, min, max):
-        self.__filter = filter          # 定义接口能够处理的物料
-        self.__minFlow = min            # 最小流量
-        self.__maxFlow = max            # 最大流量
+if __name__ == '__main__':
+    # 测试代码
+    factory = ResourceFactory()

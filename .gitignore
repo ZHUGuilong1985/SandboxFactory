@@ -13,3 +13,5 @@ __pycache__/
 *.odt
 
 .DS_Store
+
+local_readme.md

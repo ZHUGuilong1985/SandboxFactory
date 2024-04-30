@@ -2,399 +2,471 @@
     "database": "default_database",
     "version": 0.1,
     "_description": "内置数据库，默认只读。",
-    "resources": [
-        {
-            "typeid": 1,
-            "_comment": "",
-            "name": "预浸料",
-            "id": 8001,
-            "unit": "pcs",
-            "price": 200,
-            "builder": "1"
-        },
-        {
-            "typeid": 2,
-            "name": "7075",
-            "id": 8002,
-            "unit": "kg",
-            "price": 80
-        },
-        {
-            "typeid": 3,
-            "name": "天然气",
-            "id": 8003,
-            "unit": "m3",
-            "price": 80
-        },
-        {
-            "typeid": 3,
-            "name": "交流电220v50Hz",
-            "id": 8004,
-            "unit": "kwh",
-            "price": 0.6
-        },
-        {
-            "typeid": 3,
-            "name": "交流电380v50Hz",
-            "id": 8005,
-            "unit": "kwh",
-            "price": 0.6
-        },
-        {
-            "typeid": 3,
-            "name": "热压罐",
-            "id": 8003,
-            "unit": "pcs",
-            "price": 6000000,
-            "amout": 0,
-            "生产商": "山东泰达",
-            "规格型号": "4mX8m",
-            "采购日期": "2023-10-10",
-            "运维费用": 20000,
-            "need": [
-                {
-                    "类型": "F",
-                    "名称": "交流电220V50Hz",
-                    "数量": "200kw"
-                },
-                {
-                    "类型": "F",
-                    "名称": "压缩空气机",
-                    "数量": 999999
-                },
-                {
-                    "类型": "F",
-                    "名称": "压缩空气机",
-                    "数量": 999999
-                }
-            ]
-        },
-        {
-            "typeid": 3,
-            "name": "五轴数控加工中心",
-            "id": 8003,
-            "unit": "pcs",
-            "price": 5200000,
-            "amout": 0,
-            "生产商": "意特利",
-            "needs": [
-                {
-                    "类型": "",
-                    "名称": "交流电220V50Hz",
-                    "规格": "200kw",
-                    "数量": 12
-                },
-                {
-                    "类型": "",
-                    "名称": "压缩空气机",
-                    "规格": "0.8MPa",
-                    "数量": 12
-                },
-                {
-                    "类型": "",
-                    "名称": "冷却水",
-                    "规格": null,
-                    "数量": 999999
-                }
-            ],
-            "规格型号": "6mX3mX1.5m",
-            "采购日期": "2023-10-10",
-            "运维费用": 10000
-        },
-        {
-            "typeid": 2,
-            "name": "操作工",
-            "id": 8009,
-            "unit": "psc",
-            "薪水制度": "月薪",
-            "price": 8000,
-            "amout": 0
-        },
-        {
-            "typeid": 2,
-            "name": "工艺工程师",
-            "id": 8009,
-            "unit": "psc",
-            "薪水制度": "年薪",
-            "price": 200000,
-            "amout": 0
-        },
-        {
-            "typeid": 2,
-            "name": "部门经理",
-            "id": 8020,
-            "unit": "psc",
-            "薪水制度": "年薪",
-            "price": 250000,
-            "amout": 0
-        },
-        {
-            "typeid": 2,
-            "name": "操作工",
-            "id": 8009,
-            "unit": "psc",
-            "薪水制度": "月薪",
-            "price": 8000,
-            "amout": 0
-        },
-        {
-            "typeid": 2,
-            "name": "操作工",
-            "id": 8009,
-            "unit": "psc",
-            "薪水制度": "月薪",
-            "price": 8000,
-            "amout": 0
-        }
-    ],
-    "formula": [
-        {
-            "name": "产品A加工",
-            "_description": "在加工中心生产零件。",
-            "id": 1,
-            "support": [
-                {
-                    "名称": "机床",
-                    "数量": 1
-                },
-                {
-                    "名称": "操作工",
-                    "数量": 1
-                }
-            ],
-            "inputs": [
-                {
-                    "名称": "铝合金",
-                    "数量": 20
-                },
-                {
-                    "名称": "切削液",
-                    "数量": 50
-                }
-            ],
-            "outputs": [
-                {
-                    "名称": "产品A",
-                    "数量": 1
-                },
-                {
-                    "名称": "废液",
-                    "数量": 1
-                }
-            ],
-            "time": 120,
-            "canPause": true,
-            "logic": "LogicType.MANUFACTURE"
-        },
-        {
-            "name": "传送带",
-            "_description": "传送带",
-            "id": 2,
-            "support": [],
-            "inputs": [
-                {
-                    "local_id": 0,
-                    "名称": "any",
-                    "数量": 0
-                }
-            ],
-            "outputs": [
-                {
-                    "local_id": 0
-                }
-            ],
-            "time": "TIME_UNIT",
-            "canPause": true,
-            "logic": "LogicType.TRANSPORT"
-        },
-        {
-            "name": "发生器",
-            "_description": "发生器",
-            "id": 2,
-            "support": [],
-            "inputs": [
-                {
-                    "名称": null,
-                    "数量": 0
-                }
-            ],
-            "outputs": [
-                {
-                    "名称": "预浸料",
-                    "数量": 20
-                }
-            ],
-            "time": "TIME_UNIT",
-            "canPause": true,
-            "logic": "LogicType.NEW"
-        },
-        {
-            "name": "回收器",
-            "_description": "回收器",
-            "id": 2,
-            "support": [],
-            "inputs": [
-                {
-                    "名称": "any",
-                    "数量": 0
-                }
-            ],
-            "outputs": [
-                {
-                    "名称": null,
-                    "数量": 0
-                }
-            ],
-            "time": "TIME_UNIT",
-            "canPause": true,
-            "logic": "LogicType.RECYCLE"
-        },
-        {
-            "name": "库房",
-            "_description": "库房",
-            "id": 2,
-            "support": [],
-            "inputs": [
-                {
-                    "名称": "any",
-                    "数量": 0
-                }
-            ],
-            "outputs": [
-                {
-                    "名称": null,
-                    "数量": 0
-                }
-            ],
-            "time": "TIME_UNIT",
-            "canPause": true,
-            "logic": "LogicType.STORAGE"
-        }
-    ],
-    "Stations": [
-        {
-            "name": "五轴加工工位",
-            "_description": "五轴数控机床的工位",
-            "id": 1,
-            "formula": [
-                null,
-                "formula2"
-            ],
-            "Aera": 80
-        },
-        {
-            "name": "铺层工位",
-            "_description": "净化车间的铺层工位",
-            "id": 1,
-            "formula": [
-                null,
-                "formula2"
-            ],
-            "Aera": 80
-        },
-        {
-            "name": "铺层工位",
-            "_description": "净化车间的铺层工位",
-            "id": 1,
-            "formula": [
-                null,
-                "formula2"
-            ],
-            "Aera": 100
-        },
-        {
-            "name": "铺层工位",
-            "_description": "净化车间的铺层工位",
-            "id": 1,
-            "formula": [
-                null,
-                "formula2"
-            ]
-        },
-        {
-            "name": "库房",
-            "_description": " ",
-            "id": 1,
-            "formula": ""
-        }
-    ],
-    "Section": [],
-    "Workshop": [],
-    "factory": [
-        {
-            "name": "复材厂",
-            "_description": "测试案例",
-            "points": [
-                {
-                    "name": "库房",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                },
-                {
-                    "name": "铺层工位2",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                },
-                {
-                    "name": "固化",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                },
-                {
-                    "name": "铺层工位2",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                },
-                {
-                    "name": "切割",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                },
-                {
-                    "name": "检验",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                },
-                {
-                    "name": "成品库",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                }
-            ]
-        },
-        {
-            "name": "复材厂2",
-            "_description": "一个示范工厂",
-            "points": [
-                {
-                    "name": "库房",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                },
-                {
-                    "name": "库房",
-                    "_description": " ",
-                    "left": [],
-                    "right": []
-                }
-            ]
-        }
-    ],
-    "layout": [
+    "design_data": {
+        "resources": [
+            {
+                "typeid": 1,
+                "_comment": "",
+                "name": "预浸料",
+                "id": 8001,
+                "unit": "m2",
+                "price": 2000
+            },
+            {
+                "typeid": 2,
+                "name": "7075",
+                "id": 8002,
+                "unit": "kg",
+                "price": 80
+            },
+            {
+                "typeid": 3,
+                "name": "天然气",
+                "id": 8003,
+                "unit": "m3",
+                "price": 80
+            },
+            {
+                "typeid": 3,
+                "name": "交流电220v50Hz",
+                "id": 8004,
+                "unit": "kwh",
+                "price": 0.6
+            },
+            {
+                "typeid": 3,
+                "name": "交流电380v50Hz",
+                "id": 8005,
+                "unit": "kwh",
+                "price": 0.6
+            },
+            {
+                "typeid": 3,
+                "name": "热压罐",
+                "id": 8003,
+                "unit": "pcs",
+                "price": 6000000,
+                "amout": 0,
+                "生产商": "山东泰达",
+                "规格型号": "4mX8m",
+                "采购日期": "2023-10-10",
+                "运维费用": 20000,
+                "need": [
+                    {
+                        "类型": "F",
+                        "名称": "交流电220V50Hz",
+                        "数量": "200kw"
+                    },
+                    {
+                        "类型": "F",
+                        "名称": "压缩空气机",
+                        "数量": 999999
+                    },
+                    {
+                        "类型": "F",
+                        "名称": "压缩空气机",
+                        "数量": 999999
+                    }
+                ]
+            },
+            {
+                "typeid": 3,
+                "name": "五轴数控加工中心",
+                "id": 8003,
+                "unit": "pcs",
+                "price": 5200000,
+                "financial_life": 10,
+                "生产商": "意特利",
+                "needs": [
+                    {
+                        "类型": "",
+                        "名称": "交流电220V50Hz",
+                        "规格": "200kw",
+                        "数量": 12
+                    },
+                    {
+                        "类型": "",
+                        "名称": "压缩空气机",
+                        "规格": "0.8MPa",
+                        "数量": 12
+                    },
+                    {
+                        "类型": "",
+                        "名称": "冷却水",
+                        "规格": null,
+                        "数量": 999999
+                    }
+                ],
+                "规格型号": "6mX3mX1.5m",
+                "采购日期": "2023-10-10",
+                "运维费用": 10000
+            },
+            {
+                "typeid": 2,
+                "name": "操作工",
+                "id": 8009,
+                "薪水制度": "月薪",
+                "price": 8000
+            },
+            {
+                "typeid": 2,
+                "name": "工艺工程师",
+                "id": 8009,
+                "薪水制度": "年薪",
+                "price": 200000
+            },
+            {
+                "typeid": 2,
+                "name": "部门经理",
+                "id": 8020,
+                "unit": "psc",
+                "薪水制度": "年薪",
+                "price": 250000,
+                "amout": 0
+            },
+            {
+                "typeid": 2,
+                "name": "操作工",
+                "id": 8009,
+                "unit": "psc",
+                "薪水制度": "月薪",
+                "price": 8000,
+                "amout": 0
+            },
+            {
+                "typeid": 2,
+                "name": "操作工",
+                "id": 8009,
+                "unit": "psc",
+                "薪水制度": "月薪",
+                "price": 8000,
+                "amout": 0
+            }
+        ],
+        "formulas": [
+            {
+                "name": "产品A加工",
+                "_description": "在加工中心生产零件。",
+                "id": 1,
+                "support": [
+                    {
+                        "id": "xxxx-xxxx-xxxx-xxxx",
+                        "名称": "机床",
+                        "数量": 1
+                    },
+                    {
+                        "名称": "操作工",
+                        "数量": 1
+                    }
+                ],
+                "inputs": [
+                    {
+                        "名称": "铝合金",
+                        "数量": 20
+                    },
+                    {
+                        "名称": "切削液",
+                        "数量": 50
+                    }
+                ],
+                "outputs": [
+                    {
+                        "名称": "产品A",
+                        "数量": 1
+                    },
+                    {
+                        "名称": "废液",
+                        "数量": 1
+                    }
+                ],
+                "time": 120,
+                "can_pause": true,
+                "logic": "LogicType.MANUFACTURE"
+            },
+            {
+                "name": "传送带",
+                "_description": "传送带",
+                "id": 2,
+                "support": [],
+                "inputs": [
+                    {
+                        "local_id": 0,
+                        "名称": "any",
+                        "数量": 0
+                    }
+                ],
+                "outputs": [
+                    {
+                        "local_id": 0
+                    }
+                ],
+                "matching_table": [
+                    {
+                        "in": 1,
+                        "out": 1,
+                        "percent": null
+                    },
+                    {
+                        "in": 2,
+                        "out": 2,
+                        "percent": null
+                    }
+                ],
+                "time": "TIME_UNIT",
+                "can_pause": true
+            },
+            {
+                "name": "发生器",
+                "_description": "发生器",
+                "id": 2,
+                "support": [],
+                "inputs": [
+                    {
+                        "名称": null,
+                        "数量": 0
+                    }
+                ],
+                "outputs": [
+                    {
+                        "名称": "预浸料",
+                        "数量": 20
+                    }
+                ],
+                "time": "TIME_UNIT",
+                "can_pause": true
+            },
+            {
+                "name": "回收器",
+                "_description": "回收器",
+                "id": 2,
+                "support": [],
+                "inputs": [
+                    {
+                        "名称": "any",
+                        "数量": 0
+                    }
+                ],
+                "outputs": [
+                    {
+                        "名称": null,
+                        "数量": 0
+                    }
+                ],
+                "time": "TIME_UNIT",
+                "can_pause": true,
+                "logic": "LogicType.RECYCLE"
+            },
+            {
+                "name": "库房",
+                "_description": "库房",
+                "id": 2,
+                "support": [],
+                "inputs": [
+                    {
+                        "名称": "any",
+                        "数量": 0
+                    }
+                ],
+                "outputs": [
+                    {
+                        "名称": null,
+                        "数量": 0
+                    }
+                ],
+                "time": "TIME_UNIT",
+                "can_pause": true,
+                "logic": "LogicType.STORAGE"
+            }
+        ],
+        "Stations": [
+            {
+                "name": "五轴加工工位",
+                "_description": "五轴数控机床的工位",
+                "id": 1,
+                "resources": [
+                    {
+                        "id": "XXXX-XXXX",
+                        "num": 1,
+                        "_description": "五轴加工中心"
+                    },
+                    {
+                        "id": "XXXX-XXXX",
+                        "num": 1,
+                        "_description": "操作工"
+                    }
+                ],
+                "formulas": [
+                    null,
+                    "formula_1"
+                ],
+                "Aera": 80
+            },
+            {
+                "name": "铺层工位",
+                "_description": "净化车间的铺层工位",
+                "id": 1,
+                "formula": [
+                    null,
+                    "formula2"
+                ],
+                "Aera": 80
+            },
+            {
+                "name": "铺层工位",
+                "_description": "净化车间的铺层工位",
+                "id": 1,
+                "formula": [
+                    null,
+                    "formula2"
+                ],
+                "Aera": 100
+            },
+            {
+                "name": "铺层工位",
+                "_description": "净化车间的铺层工位",
+                "id": 1,
+                "formula": [
+                    null,
+                    "formula2"
+                ]
+            },
+            {
+                "name": "库房",
+                "_description": "",
+                "id": 1,
+                "formula": ""
+            }
+        ],
+        "Sections": [],
+        "Workshops": [],
+        "Factories": [
+            {
+                "name": "复材厂",
+                "_description": "测试案例",
+                "linked": true,
+                "id": 1,
+                "points": [
+                    {
+                        "name": "库房",
+                        "id": "XXXX-XXXX",
+                        "_description": " "
+                    },
+                    {
+                        "name": "铺层工位2",
+                        "id": "XXXX-XXXX",
+                        "_description": " "
+                    },
+                    {
+                        "name": "固化",
+                        "id": "XXXX-XXXX",
+                        "_description": " "
+                    },
+                    {
+                        "name": "铺层工位2",
+                        "id": "XXXX-XXXX",
+                        "_description": " "
+                    },
+                    {
+                        "name": "切割",
+                        "id": "XXXX-XXXX",
+                        "_description": " "
+                    },
+                    {
+                        "name": "检验",
+                        "id": "XXXX-XXXX",
+                        "_description": " "
+                    },
+                    {
+                        "name": "成品库",
+                        "id": "XXXX-XXXX",
+                        "_description": " "
+                    }
+                ],
+                "lines": [
+                    {
+                        "from": 1,
+                        "to": 2,
+                        "_description": "连接工位1与工位2",
+                        "transform_what": "material"
+                    },
+                    {
+                        "from": 1,
+                        "to": 2,
+                        "_description": "连接工位1与工位2",
+                        "transform_what": "material"
+                    }
+                ],
+                "initialization": [
+                    {
+                        "point_id": 2,
+                        "resource_id": 4,
+                        "qty": 100,
+                        "_description": "预浸料"
+                    },
+                    {
+                        "point_id": 2,
+                        "resource_id": 4,
+                        "qty": 100,
+                        "_description": "人员"
+                    },
+                    {
+                        "point_id": 2,
+                        "resource_id": 4,
+                        "qty": 100,
+                        "_description": "工具1"
+                    },
+                    {
+                        "point_id": 2,
+                        "resource_id": 4,
+                        "qty": 100,
+                        "_description": "工具2"
+                    }
+                ]
+            },
+            {
+                "name": "复材厂2",
+                "_description": "一个示范工厂",
+                "points": [
+                    {
+                        "name": "库房",
+                        "_description": " ",
+                        "left": [],
+                        "right": []
+                    },
+                    {
+                        "name": "库房",
+                        "_description": " ",
+                        "left": [],
+                        "right": []
+                    }
+                ]
+            }
+        ]
+    },
+    "layouts": [
         {
             "layout_name": "默认布局",
             "layout_id": 1,
             "layout_description": "默认布局",
             "_description": "增加运行信息"
         },
-        {}
+        {
+            "layout_name": "默认布局2",
+            "layout_id": 2,
+            "layout_description": "默认布局",
+            "_description": "增加运行信息"
+        }
+    ],
+    "result": [
+        {
+            "layout_id": 1,
+            "start_time": "2024-05-10 12:00:00",
+            "end_time": "2024-05-10 12:30:00"
+        },
+        {
+            "layout_id": 2,
+            "start_time": "2024-05-10 12:00:00",
+            "end_time": "2024-05-10 12:30:00"
+        }
     ]
 }

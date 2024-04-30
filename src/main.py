@@ -15,33 +15,12 @@ import solution
 
 from solution import Factory, Workshop, Section, Station
 from blueprint import Blueprint
-from configuration import Configuration
+
 from sandbox import Sandbox
 
 'main mould. 主要负责程序整体运行；'
 
 __author__ = 'ZHU Guilong'
-
-
-class Layout:
-    '''
-    一个完整的定义
-    '''
-
-    refresh_cycle = 0  # 刷新周期，用于调试和UI的显示；实际调成0，快速看结果；
-
-    Minimum_computation_period = 5  # 5 min
-
-    def __init__(self):
-        '''
-        加一个工厂；
-        加材料；
-        加动力；
-        运行；
-        统计消耗和产出；
-
-        '''
-        pass
 
 
 class Consume():
@@ -114,30 +93,6 @@ def create_elements():
     2. 后期，从文件创建；
     '''
 
-    # 设备
-    autoclave = material.Machine("autoclave")
-    oven = material.Machine("oven")
-    CNC_machining_center = material.Machine("CNC_machining_center")
-
-    # 人员
-    operator = material.Worker("operator")
-
-    # 材料
-    prepreg = material.Material("prepreg")       # 预浸料
-    epoxy_resin = material.Material("epoxy_resin")   # 环氧树脂
-
-    # 其他
-    compressed_air_800kpa = material.Material("compressed_air_800kpa")   # 压缩空气
-    AC220v = material.Material("220v AC")
-    AC380v = material.Material("380v AC")
-    # 压缩氮气
-    compressed_nitrogen = material.Material("compressed_nitrogen")
-    # 普通water
-    industrial_water = material.Material("industrial_water")
-    waste_water = material.Material("waste_water")                       # 污水
-
-    cutter = material.Material("cutter")     # 刀具
-
     # 新建公式，工艺
     formula_1 = solution.Formula("固化工艺", "")
     formula_2 = solution.Formula("切割工艺", "")
@@ -147,8 +102,8 @@ def create_elements():
     formula_2 = fty.new_formula("切割工艺")
 
     # 新建配置，工位
-    configuration_1 = Configuration("固化工段", "")
-    configuration_2 = Configuration("切割工段", "")
+    # configuration_1 = Configuration("固化工段", "")
+    # configuration_2 = Configuration("切割工段", "")
 
     # 新建蓝图，工厂
     blueprint_1 = Blueprint("复合材料工厂", "")
@@ -186,14 +141,10 @@ def create_new_factory():
 def start():
     print('start...')
 
-
 def main():
-
     # 加载存在，可以在默认模板下，进行编辑。
-
     SetupSystem.load_setup('resouce.json')
 
-    #
     sandbox = Sandbox()  # 调试沙盒
 
     sandbox.load_resource('resouce.json')
