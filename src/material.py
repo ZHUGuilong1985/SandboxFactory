@@ -61,7 +61,7 @@ class Resource(Definition):
 
 
 class Material(Resource):
-    ''' 
+    '''
     材料的基础类型，可以是：材料、产品、水、电、气等
     '''
 
@@ -79,8 +79,17 @@ class Material(Resource):
 
     def show_info(self):
         print("Material: ", self.name,
-              " unit: ",    self.unit,
-              " price: ",   self.price)
+              "unit: ",     self.unit,
+              "price: ",    self.price)
+
+    def pack_data(self):
+
+        return {'type_id': self.type_id.value,
+                'name': self.name,
+                'description': self.desription,
+                'sbid': self.sbid,
+                'unit': self.unit.value,
+                'price': self.price}
 
 
 class SalaryType(Enum):
@@ -112,9 +121,19 @@ class Worker(Resource):
 
     def show_info(self):
         print("Worker: ",       self.name,
-              " sbid: ",          self.sbid,
+              " sbid: ",        self.sbid,
               " salary: ",      self.salary,
               " salary_type: ", self.salary_type)
+
+    def pack_data(self):
+        return {'type_id': self.type_id.value,
+                'name': self.name,
+                'description': self.desription,
+                'sbid': self.sbid,
+                'salary_type': self.salary_type.value,
+                'salary': self.salary,
+                'consume': self.consume,
+                'costs': self.costs}
 
 
 class Machine(Resource):
@@ -144,6 +163,18 @@ class Machine(Resource):
 
     def show_info(self):
         print("Machine: ", self.name, " sbid: ", self.sbid)
+
+    def pack_data(self):
+        return {'type_id': self.type_id.value,
+                'name': self.name,
+                'description': self.desription,
+                'sbid': self.sbid,
+                'manufacturer': self.manufacturer,
+                'model': self.model,
+                'support_list': self.support_list,
+                'cost': self.cost,
+                'financial_life': self.financial_life,
+                'other_cost': self.other_cost}
 
 
 class MaterialOperator:

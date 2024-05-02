@@ -94,3 +94,7 @@ class DesignManager:
         self.material_list.append(n_material)
 
         n_material.show_info()  # 显示信息
+
+    def pack_data(self):
+        # pack all data
+        return None

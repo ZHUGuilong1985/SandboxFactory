@@ -71,7 +71,7 @@ class Sandbox():
         else:
             self.dict_all = SetupSystem.load_setup('./default.json')
 
-    def packed_all_data(self):
+    def packed_data(self):
         # pack all data
         return None
 
@@ -80,7 +80,7 @@ class Sandbox():
         command list:
         1. add material
         2. add formula
-        3. add ...        
+        3. add ...
         '''
         while True:
             input_str = input("Enter command: ")
@@ -108,5 +108,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sb = Sandbox()
-    sb.run()
+    main()

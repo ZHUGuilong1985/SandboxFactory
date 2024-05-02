@@ -98,6 +98,20 @@ class Formula(Definition):
     def set_data(self, dict):
         pass
 
+    def pack_data(self):
+        # pack all data
+        return {
+            "sbid": self.sbid,
+            "name": self.name,
+            "support": self.support,
+            "inputs": self.input,
+            "outputs": self.output,
+            "matching_table": self.matching_table,
+            "time": self.time,
+            "can_pause": self.can_pause,
+            "description": self.description
+        }
+
 
 class FormulaFactory:
     def __init__(self, root):
