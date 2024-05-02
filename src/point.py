@@ -45,9 +45,9 @@ class Point(Definition, Route):
         self.formula = None
 
         # 对象
-        self.sockets  = []  # : Socket
-        self.vessel : Vessel = None    # 容器
-        self.plugs    = []
+        self.sockets = []  # : Socket
+        self.vessel: Vessel = None    # 容器
+        self.plugs = []
 
         self.init_objects()
 
@@ -62,8 +62,6 @@ class Point(Definition, Route):
 
     def setup_by_formula(self, formu: Formula):
         # 根据公式进行设置
-        
-
         pass
 
     def draw(self):

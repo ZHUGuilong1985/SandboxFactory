@@ -47,8 +47,8 @@ class Resource(Definition):
     定义基础的属性
     '''
 
-    def __init__(self, parent, id=None, name=None, description=None):
-        super().__init__(parent, id)
+    def __init__(self, parent, sbid=None, name=None, description=None):
+        super().__init__(parent, sbid)
 
         self.name = name
         self.desription = description
@@ -56,7 +56,7 @@ class Resource(Definition):
         self.cost = 0  # 资金
 
     def check_id(self):
-        # check the id is legitimate or not.
+        # check the sbid is legitimate or not.
         return True
 
 
@@ -65,12 +65,12 @@ class Material(Resource):
     材料的基础类型，可以是：材料、产品、水、电、气等
     '''
 
-    def __init__(self, parent, id=None, name=None, description=None):
-        super().__init__(parent, id)
+    def __init__(self, parent, sbid=None, name=None, description=None):
+        super().__init__(parent, sbid)
         # unit=MaterialUnit.PCS, price=0
 
         # base info
-        self.typeid = MaterialType.MATERIAL
+        self.type_id = MaterialType.MATERIAL
         self.name = name
         self.desription = description
 
@@ -93,11 +93,11 @@ class SalaryType(Enum):
 class Worker(Resource):
     # 操作者
 
-    def __init__(self, parent, id=None, name=None, description=None):
-        super().__init__(parent, id)
+    def __init__(self, parent, sbid=None, name=None, description=None):
+        super().__init__(parent, sbid)
 
         # base info
-        self.typeid = MaterialType.WORKER
+        self.type_id = MaterialType.WORKER
         self.name = name  # worker type
         self.desription = description
 
@@ -112,7 +112,7 @@ class Worker(Resource):
 
     def show_info(self):
         print("Worker: ",       self.name,
-              " id: ",          self.id,
+              " sbid: ",          self.sbid,
               " salary: ",      self.salary,
               " salary_type: ", self.salary_type)
 
@@ -122,26 +122,28 @@ class Machine(Resource):
     设备
     '''
 
-    def __init__(self, parent, id=None, name=None, description=None):
+    def __init__(self, parent, sbid=None, name=None, description=None):
         # self, name, model=None, support_list=None, cost=0, financial_life=10
-        super().__init__(parent, id)
+        super().__init__(parent, sbid)
 
         # base info
-        self.typeid = MaterialType.MACHINE
+        self.type_id = MaterialType.MACHINE
         self.name = name
         self.desription = description
 
         # local info
-        self.manufacturer = None  # 制造商
-        self.model = ''  # "规格型号": "6mX3mX1.5m",
-        self.support_list = []  # 运维支持
-        self.cost = 0  # 采购成本
-        self.financial_life = 10  # 财务寿命 ,10年
+        self.manufacturer = None    # 制造商
+        self.model = ''             # "规格型号": "6mX3mX1.5m"
+
+        # supports: dicts, {"obj": obj, "qty": qty, '_description': _description}
+        self.support_list = []
+        self.cost = 0               # 采购成本
+        self.financial_life = 10    # 财务寿命 ,10年
         # 运维费用，根据运维支持、采购成本、财务寿命等综合自动结算。
         self.other_cost = []  # 维修成本，校验成本
 
     def show_info(self):
-        print("Machine: ", self.name, " id: ", self.id)
+        print("Machine: ", self.name, " sbid: ", self.sbid)
 
 
 class MaterialOperator:
@@ -177,25 +179,25 @@ class ResourceFactory:
         self.root = root    # 容器
 
     def load_resource(self, resource_dict):  # 通过输入，来生产不同材料的实例；
-        # with id.
+        # with sbid.
 
-        if resource_dict['typeid'] == MaterialType.MATERIAL.value:  # 材料
+        if resource_dict['type_id'] == MaterialType.MATERIAL.value:  # 材料
             new_resource = Material(self.root,
-                                    resource_dict['id'],
+                                    resource_dict['sbid'],
                                     resource_dict['name'])
             new_resource.price = resource_dict['price']
             new_resource.unit = resource_dict['unit']
 
-        elif resource_dict['typeid'] == MaterialType.WORKER.value:  # 人员
+        elif resource_dict['type_id'] == MaterialType.WORKER.value:  # 人员
             new_resource = Worker(self.root,
-                                  resource_dict['id'],
+                                  resource_dict['sbid'],
                                   resource_dict['name'])
             new_resource.salary = resource_dict['salary']
             new_resource.salary_type = resource_dict['salary_type']
 
-        elif resource_dict['typeid'] == MaterialType.MACHINE.value:  # 设备
+        elif resource_dict['type_id'] == MaterialType.MACHINE.value:  # 设备
             new_resource = Machine(self.root,
-                                   resource_dict['id'],
+                                   resource_dict['sbid'],
                                    resource_dict['name'])
 
             new_resource.price = resource_dict['price']
@@ -209,17 +211,17 @@ class ResourceFactory:
         return new_resource
 
     def create_resource(self, resource_dict):
-        # without id.
+        # without sbid.
 
-        if resource_dict['typeid'] == MaterialType.MATERIAL:  # 材料
+        if resource_dict['type_id'] == MaterialType.MATERIAL:  # 材料
             new_resource = Material(resource_dict['name'],
                                     resource_dict['unit'],
                                     resource_dict['price'])
-        elif resource_dict['typeid'] == MaterialType.WORKER:  # 人员
+        elif resource_dict['type_id'] == MaterialType.WORKER:  # 人员
             new_resource = Worker(resource_dict['name'],
                                   resource_dict['salary_type'],
                                   resource_dict['salary'])
-        elif resource_dict['typeid'] == MaterialType.MACHINE:  # 设备
+        elif resource_dict['type_id'] == MaterialType.MACHINE:  # 设备
             new_resource = Machine(resource_dict['name'],
                                    resource_dict['model'],
                                    resource_dict['support_list'],

@@ -4,13 +4,13 @@ from solution import Frame,    Line
 
 class Station(Point):
 
-    def __init__(self, name, id,  resource, formula):
+    def __init__(self, name, sbid,  resource, formula):
         super().__init__(name)  # 继承父类
 
-        self.object_id = id
+        self.sbid = sbid
 
         self.resources = []     # 加载资源
-        self.formulas = []      # 
+        self.formulas = []      #
 
         # local data
         self.aera = None

@@ -34,7 +34,7 @@ elements_list = [
 links_list = [
     {
         "IN_ID":        1,  # 链接对象
-        "PLUG_ID":      25, # 插头编号
+        "PLUG_ID":      25,  # 插头编号
         "OUT_ID":       2,  # 链接对象
         "SOCKET_ID":    51  # 插座编号
     }, {
@@ -78,7 +78,7 @@ outputs_list = [{
 
 str_multi_channel = {
     "name":             "典型复材车间",
-    "id":               1,
+    "sbid":               1,
 
     "elements_list":    [],     # 元素清单
     "links_list":       [],     # 连接清单

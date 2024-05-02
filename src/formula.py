@@ -18,11 +18,6 @@ from definition import Definition
 #     STORAGE = 5         # 存储 =
 #     CHANNEL = 6         # 多通道
 
-# class ItemsType(Enum):
-#     IN = 1
-#     HOLD = 2
-#     OUT = 3
-
 
 class MaterialPosition:
 
@@ -37,82 +32,89 @@ class MaterialPosition:
 
 
 class Formula(Definition):
-    '''    '''
+    '''
+    formula:
+    position_id: [null,0,1,2...]
+    match_table: [2,90,100%]
+    '''
 
-    def __init__(self, id=None, name=None):
-        super().__init__(id)
+    def __init__(self, root, sbid=None, name=None, description=None):
+        super().__init__(root, sbid)
 
-        self.id = id
         self.name = name
 
-        self.support = []  #
-        self.input = []  # 输入
-        self.output = []  # 输出
+        self.support = []
+        self.input = []
+        self.output = []
         self.matching_table = []  # 匹配表，传送装置才会有。
-        self.time = str_formula["time"]
-        self.can_pause = str_formula["canPause"]
+        self.time = 0
+        self.can_pause = True
 
-        self.desription = '一个公式的描述。'
+        self.desription = ''
 
-    def add_input(self, dict):
-        # 增加一条输入
-        self.input.append(dict)
-
-    def add_output(self, dict):
-        self.output.append(dict)
-
-    def add_support(self, dict):
-        self.support.append(dict)
+    def add_list(self, dict, lst):
+        # { 'sbid': 'xxxx-xxxx-xxxx-xxxx', 'qty': 1 }
+        obj = self.root_container.get_object_by_sbid(dict['sbid'])
+        if obj:
+            lst.append(
+                {"obj":             obj,
+                 "qty":             dict['qty'],
+                 "_description":    dict['_description'],
+                 "position":        dict['position']})
+            return True
+        else:
+            return False
 
     def add_matching_table(self, dict):
-        self.matching_table(dict)
+        '''
+        {
+            'in': 1,
+            'out': 2,
+            'percent': 0.900
+        }
+        '''
+        self.matching_table.append(dict)
 
     def set_input(self, lst):
-        # 设置所有输入
-        self.add_input.clear()  # 清空
+        self.input.clear()
         for item in lst:
-            obj = self.root_container. get_object_by_id(item['id'])
-            _dict = {"obj": obj, "qty": item['qty']}
-            self.add_input(_dict)
+            self.add_list(item, self.input)
 
     def set_output(self, lst):
-        # 设置所有输入
-        self.add_output.clear()  # 清空
+        self.output.clear()
         for item in lst:
-            obj = self.root_container. get_object_by_id(item['id'])
-            _dict = {"obj": obj, "qty": item['qty']}
-            self.add_output(_dict)
-
-    def set_output(self, lst):
-        pass
+            self.add_list(item, self.output)
 
     def set_support(self, lst):
-        # 只添加id，还是需要找到对应的对象?
-        self.add_support.clear()  # 清空
+        self.support.clear()
         for item in lst:
-            obj = self.root_container. get_object_by_id(item['id'])
-            _dict = {"obj": obj, "qty": item['qty']}
-            self.add_support(_dict)
+            self.add_list(item, self.support)
 
     def set_matching_table(self, lst):
-        pass
+        self.matching_table.clear()
+        for item in lst:
+            self.add_matching_table(item)
 
     def set_data(self, dict):
         pass
 
 
 class FormulaFactory:
+    def __init__(self, root):
+        self.root = root
 
     def load_formula(self, dict):  # 通过输入，来生产公式实例
 
-        new_formula = Formula(dict['id'], dict['name'])
+        new_formula = Formula(dict['sbid'], dict['name'])
 
         # 设置信息
         new_formula.set_support(dict['support'])
         new_formula.set_input(dict['inputs'])
         new_formula.set_output(dict['outputs'])
+        new_formula.set_matching_table(dict['matching_table'])
+
         new_formula.set_time(dict['time'])
-        new_formula.set_can_pause(dict['canPause'])
+        new_formula.set_can_pause(dict['can_pause'])
 
         return new_formula
 

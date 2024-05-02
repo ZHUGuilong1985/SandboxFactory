@@ -5,45 +5,45 @@
     "design_data": {
         "resources": [
             {
-                "typeid": 0,
-                "_comment": "",
+                "type_id": 0,
+                "_description": "",
                 "name": "预浸料",
-                "id": 8001,
+                "sbid": 8001,
                 "unit": "m2",
                 "price": 2000
             },
             {
-                "typeid": 0,
+                "type_id": 0,
                 "name": "7075",
-                "id": 8002,
+                "sbid": 8002,
                 "unit": "kg",
                 "price": 80
             },
             {
-                "typeid": 0,
+                "type_id": 0,
                 "name": "天然气",
-                "id": 8003,
+                "sbid": 8003,
                 "unit": "m3",
                 "price": 80
             },
             {
-                "typeid": 0,
+                "type_id": 0,
                 "name": "交流电220v50Hz",
-                "id": 8004,
+                "sbid": 8004,
                 "unit": "kwh",
                 "price": 0.6
             },
             {
-                "typeid": 0,
+                "type_id": 0,
                 "name": "交流电380v50Hz",
-                "id": 8005,
+                "sbid": 8005,
                 "unit": "kwh",
                 "price": 0.6
             },
             {
-                "typeid": 2,
+                "type_id": 2,
                 "name": "热压罐",
-                "id": 8003,
+                "sbid": 8003,
                 "unit": "pcs",
                 "price": 6000000,
                 "amout": 0,
@@ -51,50 +51,50 @@
                 "规格型号": "4mX8m",
                 "采购日期": "2023-10-10",
                 "运维费用": 20000,
-                "need": [
+                "support": [
                     {
                         "类型": "F",
-                        "名称": "交流电220V50Hz",
-                        "数量": "200kw"
+                        "name": "交流电220V50Hz",
+                        "qty": "200kw"
                     },
                     {
                         "类型": "F",
-                        "名称": "压缩空气机",
-                        "数量": 999999
+                        "name": "压缩空气机",
+                        "qty": 999999
                     },
                     {
                         "类型": "F",
-                        "名称": "压缩空气机",
-                        "数量": 999999
+                        "name": "压缩空气机",
+                        "qty": 999999
                     }
                 ]
             },
             {
-                "typeid": 2,
+                "type_id": 2,
                 "name": "五轴数控加工中心",
-                "id": 8003,
+                "sbid": 8003,
                 "unit": "pcs",
                 "price": 5200000,
                 "financial_life": 10,
                 "manufacturer": "意特利",
-                "needs": [
+                "support": [
                     {
                         "类型": "",
-                        "名称": "交流电220V50Hz",
+                        "name": "交流电220V50Hz",
                         "规格": "200kw",
-                        "数量": 12
+                        "qty": 12
                     },
                     {
                         "类型": "",
-                        "名称": "压缩空气机",
+                        "name": "压缩空气机",
                         "规格": "0.8MPa",
-                        "数量": 12
+                        "qty": 12
                     },
                     {
                         "类型": "",
-                        "名称": "冷却水",
+                        "name": "冷却水",
                         "规格": null,
-                        "数量": 999999
+                        "qty": 999999
                     }
                 ],
                 "规格型号": "6mX3mX1.5m",
@@ -102,79 +102,98 @@
                 "运维费用": 10000
             },
             {
-                "typeid": 1,
+                "type_id": 1,
                 "name": "操作工",
-                "id": 8009,
+                "sbid": 8009,
                 "salary_type": "月薪",
                 "salary": 8000
             },
             {
-                "typeid": 1,
+                "type_id": 1,
                 "name": "工艺工程师",
-                "id": 8009,
+                "sbid": 8009,
                 "salary_type": "年薪",
                 "salary": 200000
             },
             {
-                "typeid": 1,
+                "type_id": 1,
                 "name": "部门经理",
-                "id": 8020,
+                "sbid": 8020,
                 "unit": "psc",
                 "salary_type": "年薪",
                 "salary": 250000,
                 "amout": 0
             },
             {
-                "typeid": 1,
+                "type_id": 1,
                 "name": "操作工",
-                "id": 8009,
+                "sbid": 8009,
                 "unit": "psc",
                 "salary_type": "月薪",
                 "salary": 8000,
                 "amout": 0
             },
             {
-                "typeid": 0,
+                "type_id": 0,
                 "name": "rmb",
-                "id": 8009,
+                "sbid": 8009,
                 "unit": "yuan",
                 "price": 1
             }
         ],
         "formulas": [
             {
+                "sbid": 1,
                 "name": "产品A加工",
                 "_description": "在加工中心生产零件。",
-                "id": 1,
                 "support": [
                     {
-                        "id": "xxxx-xxxx-xxxx-xxxx",
-                        "名称": "机床",
-                        "数量": 1
+                        "position_id": null,
+                        "sbid": "xxxx-xxxx-xxxx-xxxx",
+                        "qty": 1,
+                        "_description": "机床"
                     },
                     {
-                        "名称": "操作工",
-                        "数量": 1
+                        "position_id": null,
+                        "sbid": "xxxx-xxxx-xxxx-xxxx",
+                        "qty": 1,
+                        "_description": "操作工"
                     }
                 ],
                 "inputs": [
                     {
-                        "名称": "铝合金",
-                        "数量": 20
+                        "position_id": null,
+                        "name": "铝合金",
+                        "qty": 20
                     },
                     {
-                        "名称": "切削液",
-                        "数量": 50
+                        "position_id": null,
+                        "name": "切削液",
+                        "qty": 50
                     }
                 ],
                 "outputs": [
                     {
-                        "名称": "产品A",
-                        "数量": 1
+                        "position_id": null,
+                        "name": "产品A",
+                        "qty": 1
                     },
                     {
-                        "名称": "废液",
-                        "数量": 1
+                        "position_id": null,
+                        "name": "废液",
+                        "qty": 1
+                    }
+                ],
+                "matching_table": [
+                    {
+                        "position_in": 1,
+                        "position_out": 1,
+                        "percent": null
+                    },
+                    {
+                        "in": 2,
+                        "out": 2,
+                        "percent": null
                     }
                 ],
                 "time": 120,
@@ -184,13 +203,13 @@
             {
                 "name": "传送带",
                 "_description": "传送带",
-                "id": 2,
+                "sbid": 2,
                 "support": [],
                 "inputs": [
                     {
                         "local_id": 0,
-                        "名称": "any",
-                        "数量": 0
+                        "name": "any",
+                        "qty": 0
                     }
                 ],
                 "outputs": [
@@ -216,18 +235,18 @@
             {
                 "name": "发生器",
                 "_description": "发生器",
-                "id": 2,
+                "sbid": 2,
                 "support": [],
                 "inputs": [
                     {
-                        "名称": null,
-                        "数量": 0
+                        "name": null,
+                        "qty": 0
                     }
                 ],
                 "outputs": [
                     {
-                        "名称": "预浸料",
-                        "数量": 20
+                        "name": "预浸料",
+                        "qty": 20
                     }
                 ],
                 "time": "TIME_UNIT",
@@ -236,18 +255,18 @@
             {
                 "name": "回收器",
                 "_description": "回收器",
-                "id": 2,
+                "sbid": 2,
                 "support": [],
                 "inputs": [
                     {
-                        "名称": "any",
-                        "数量": 0
+                        "name": "any",
+                        "qty": 0
                     }
                 ],
                 "outputs": [
                     {
-                        "名称": null,
-                        "数量": 0
+                        "name": null,
+                        "qty": 0
                     }
                 ],
                 "time": "TIME_UNIT",
@@ -257,18 +276,18 @@
             {
                 "name": "库房",
                 "_description": "库房",
-                "id": 2,
+                "sbid": 2,
                 "support": [],
                 "inputs": [
                     {
-                        "名称": "any",
-                        "数量": 0
+                        "name": "any",
+                        "qty": 0
                     }
                 ],
                 "outputs": [
                     {
-                        "名称": null,
-                        "数量": 0
+                        "name": null,
+                        "qty": 0
                     }
                 ],
                 "time": "TIME_UNIT",
@@ -280,15 +299,15 @@
             {
                 "name": "五轴加工工位",
                 "_description": "五轴数控机床的工位",
-                "id": 1,
+                "sbid": 1,
                 "resources": [
                     {
-                        "id": "XXXX-XXXX",
+                        "sbid": "XXXX-XXXX",
                         "num": 1,
                         "_description": "五轴加工中心"
                     },
                     {
-                        "id": "XXXX-XXXX",
+                        "sbid": "XXXX-XXXX",
                         "num": 1,
                         "_description": "操作工"
                     }
@@ -302,7 +321,7 @@
             {
                 "name": "铺层工位",
                 "_description": "净化车间的铺层工位",
-                "id": 1,
+                "sbid": 1,
                 "formula": [
                     null,
                     "formula2"
@@ -312,7 +331,7 @@
             {
                 "name": "铺层工位",
                 "_description": "净化车间的铺层工位",
-                "id": 1,
+                "sbid": 1,
                 "formula": [
                     null,
                     "formula2"
@@ -322,7 +341,7 @@
             {
                 "name": "铺层工位",
                 "_description": "净化车间的铺层工位",
-                "id": 1,
+                "sbid": 1,
                 "formula": [
                     null,
                     "formula2"
@@ -331,7 +350,7 @@
             {
                 "name": "库房",
                 "_description": "",
-                "id": 1,
+                "sbid": 1,
                 "formula": ""
             }
         ],
@@ -342,42 +361,42 @@
                 "name": "复材厂",
                 "_description": "测试案例",
                 "linked": true,
-                "id": 1,
+                "sbid": 1,
                 "points": [
                     {
                         "name": "库房",
-                        "id": "XXXX-XXXX",
-                        "_description": " "
+                        "sbid": "XXXX-XXXX",
+                        "_description": null
                     },
                     {
                         "name": "铺层工位2",
-                        "id": "XXXX-XXXX",
-                        "_description": " "
+                        "sbid": "XXXX-XXXX",
+                        "_description": ""
                     },
                     {
                         "name": "固化",
-                        "id": "XXXX-XXXX",
-                        "_description": " "
+                        "sbid": "XXXX-XXXX",
+                        "_description": ""
                     },
                     {
                         "name": "铺层工位2",
-                        "id": "XXXX-XXXX",
-                        "_description": " "
+                        "sbid": "XXXX-XXXX",
+                        "_description": ""
                     },
                     {
                         "name": "切割",
-                        "id": "XXXX-XXXX",
-                        "_description": " "
+                        "sbid": "XXXX-XXXX",
+                        "_description": ""
                     },
                     {
                         "name": "检验",
-                        "id": "XXXX-XXXX",
-                        "_description": " "
+                        "sbid": "XXXX-XXXX",
+                        "_description": ""
                     },
                     {
                         "name": "成品库",
-                        "id": "XXXX-XXXX",
-                        "_description": " "
+                        "sbid": "XXXX-XXXX",
+                        "_description": ""
                     }
                 ],
                 "lines": [
@@ -427,13 +446,13 @@
                 "points": [
                     {
                         "name": "库房",
-                        "_description": " ",
+                        "_description": "",
                         "left": [],
                         "right": []
                     },
                     {
                         "name": "库房",
-                        "_description": " ",
+                        "_description": "",
                         "left": [],
                         "right": []
                     }

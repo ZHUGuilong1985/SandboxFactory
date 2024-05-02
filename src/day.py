@@ -57,7 +57,7 @@ single_day_weekend = {
 
 
 str_days = {
-    "id":                               1,
+    "sbid":                               1,
     "name":                             "双休员工日历",
     "workby":                           WorkBy.work_by_week,   # 按星期进行；
     "Single_or_double":                 iswork_normal,   # 双休日
@@ -66,7 +66,7 @@ str_days = {
 }
 
 str_days = {
-    "id":                               2,
+    "sbid":                               2,
     "name":                             "单休员工日历",
     "workby":                           WorkBy.work_by_week,   # 按月休息，每个月多少天休息；
     "Single_or_double":                 single_day_weekend,   # 单休日

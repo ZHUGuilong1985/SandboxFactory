@@ -58,10 +58,10 @@ resource_items = [{
 
 str_formula = {
     "name":         "产品A加工",
-    "id":           1,
+    "sbid":           1,
     "items":        resource_items,   # 公式主体
     "time":         120,
-    "canPause":     True,
+    "can_pause":     True,
     "logic":        LogicType.MANUFACTURE
 }
 
@@ -95,10 +95,10 @@ resource_items = [{
 
 str_formula = {
     "name":         "传送带",
-    "id":           2,
+    "sbid":           2,
     "items":        resource_items,
     "time":         TIME_UNIT,
-    "canPause":     True,
+    "can_pause":     True,
     "logic":        LogicType.TRANSPORT
 }
 
@@ -115,10 +115,10 @@ resource_items = [{
 
 str_formula = {
     "name":         "发生器",
-    "id":           3,
+    "sbid":           3,
     "items":        resource_items,
     "time":         TIME_UNIT,
-    "canPause":     True,
+    "can_pause":     True,
     "logic":        LogicType.NEW
 }
 
@@ -138,10 +138,10 @@ resource_items = [{
 
 str_formula = {
     "name":         "回收器",
-    "id":           4,
+    "sbid":           4,
     "items":        resource_items,
     "time":         TIME_UNIT,
-    "canPause":     True,
+    "can_pause":     True,
     "logic":        LogicType.RECYCLE
 }
 
@@ -162,9 +162,9 @@ resource_items = [{
 
 str_formula = {
     "name":         "库房",
-    "id":           5,
+    "sbid":           5,
     "items":        resource_items,
     "time":         TIME_UNIT,
-    "canPause":     True,
+    "can_pause":     True,
     "logic":        LogicType.STORAGE
 }

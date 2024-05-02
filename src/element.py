@@ -9,12 +9,12 @@ from id_maker import IdMaker
 
 class Element():
 
-    def __init__(self, root_container, id=None):
+    def __init__(self, root_container, sbid=None):
 
-        if id:
-            self.id = id
+        if sbid:
+            self.sbid = sbid
         else:
-            self.id = IdMaker.get_unique_id()
+            self.sbid = IdMaker.get_unique_id()
 
         self.root_container = root_container  # dm or layout
 

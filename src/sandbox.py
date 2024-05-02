@@ -75,6 +75,32 @@ class Sandbox():
         # pack all data
         return None
 
+    def run(self):
+        '''
+        command list:
+        1. add material
+        2. add formula
+        3. add ...        
+        '''
+        while True:
+            input_str = input("Enter command: ")
+            if input_str == "exit":
+                break
+            elif input_str == "load":
+                self.load_data_from_disk()
+            elif input_str == "save":
+                self.write_data_to_disk()
+            elif input_str == "new_layout":
+                self.layouts.append(self.new_layout(self.dict_all["layout"]))
+            elif input_str == "run":
+                self.run()
+            elif input_str == "help":
+                pass
+            else:
+                pass
+
+        print("sandbox running. ")
+
 
 def main():
     sb = Sandbox()

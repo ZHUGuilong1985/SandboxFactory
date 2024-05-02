@@ -1,26 +1,24 @@
-# instance class
-
 from element import Element
 
 
 class Definition(Element):
 
-    def __init__(self, parent, id=None, name=None, description=None):
+    def __init__(self, parent, sbid=None, name=None, description=None):
         '''
         name:
-        id:
+        sbid:
         description:
         solution:    
         parent:      
         '''
-        super().__init__(parent, id)
+        super().__init__(parent, sbid)
         self.name = name
         self.desription = description
 
 
 def main():
     d = Definition('test', 'test', 'test')
-    print(d.id)
+    print(d.sbid)
     print('Done.')
 
 

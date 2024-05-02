@@ -1,3 +1,4 @@
+from formula import FormulaFactory
 from material import ResourceFactory
 
 
@@ -20,8 +21,8 @@ class DesignManager:
     def load_data(self):
 
         self.load_resource(self.dict["resources"])
-        # self.load_formulas()
-        # self.load_stations()
+        self.load_formulas()
+        self.load_stations()
         # self.load_section()
         # self.load_workshop()
         # self.load_factory()
@@ -36,6 +37,8 @@ class DesignManager:
 
     def load_formulas(self, lst):
         # load formulas
+        formula_factory = FormulaFactory(self)
+
         pass
 
     def load_stations(self):
@@ -50,9 +53,10 @@ class DesignManager:
     def load_factory(self):
         pass
 
-    def get_object_by_id(self, id):
+    def get_object_by_sbid(self, sbid):
+        # find object by sbid
         for item in self.material_list:
-            if item.id == id:
+            if item.sbid == sbid:
                 return item
 
         return None
@@ -61,3 +65,32 @@ class DesignManager:
         # show info in terminal
         for item in self.material_list:
             item.show_info()
+
+    def run(self):
+        while True:
+            input_str = input("Enter command: ")
+            if input_str == "exit":
+                break
+            elif input_str == "help":
+                pass
+            elif input_str == "new material":
+                # command: new_material name price unit
+                self.new_material('material1', '100', 'pcs')
+
+            elif input_str == "new formula":
+                pass
+            else:
+                pass
+
+    def new_material(self, name, price, unit):
+        dict = {
+            "name":  name,
+            "price": price,
+            "unit":  unit
+        }
+        # create new material
+        material_factory = ResourceFactory(self)
+        n_material = material_factory.create_resource(dict)
+        self.material_list.append(n_material)
+
+        n_material.show_info()  # 显示信息

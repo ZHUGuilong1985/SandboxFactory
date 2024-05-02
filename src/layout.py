@@ -37,9 +37,23 @@ class Layout:
         # run the layout, and delay 60min.
         time_count = 0
         while time_count < delay_time:
-             # update all the instance. 
+            # update all the instance.
             for item in self.instance_list:
                 item.update()
 
             time_count += TIME_UNIT
         print(f'Finished. ')
+
+    def run(self):
+        while True:
+            input_str = input("Enter command: ")
+            if input_str == "exit":
+                break
+            elif input_str == "load":
+                self.load_data()
+            elif input_str == "run":
+                self.run()
+            elif input_str == "help":
+                pass
+            else:
+                pass
