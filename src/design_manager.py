@@ -98,3 +98,18 @@ class DesignManager:
     def pack_data(self):
         # pack all data
         return None
+
+    '''
+    command list:
+    1. new_material: name = 7075, price = 20, unit = pcs
+    2. new_formula:  
+    CRUD: create, read, update, delete
+    
+    create material:
+    read material:
+    update material:
+    delete material:
+
+    create material: name,7075;price,20;unit,pcs.
+
+    '''

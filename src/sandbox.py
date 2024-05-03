@@ -99,7 +99,7 @@ class Sandbox():
             else:
                 pass
 
-        print("sandbox running. ")
+        print("Sandbox running. ")
 
 
 def main():
@@ -109,3 +109,27 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+'''
+command list:
+1. file
+    0. new a sandbox empty file
+    1. load
+    2. save
+    5. show sandbox info.
+    6. exit
+2. design
+    8. create formula
+    9. show all formulas
+    4. show all materials
+3. layout
+    create material
+    11. link
+4. run
+    5. run
+5. analysis
+
+6. about
+    7. help
+
+'''
